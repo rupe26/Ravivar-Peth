@@ -43,6 +43,7 @@ input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ln);bo
 .nv{position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--cd);border-top:1px solid var(--ln);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(16,40,52,.08)}
 .nv button{flex:1;border:0;background:none;padding:6px 2px;font-size:11px;color:var(--mu);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;border-radius:10px}.nv button span{font-size:20px;line-height:1.1}.nv button.on{color:var(--br);font-weight:700;background:var(--sf)}
 .gt{max-width:420px;margin:12vh auto 0;background:var(--cd);border:1px solid var(--ln);border-radius:18px;padding:22px;box-shadow:var(--sh);text-align:center}.gt h2{margin:6px 0 4px}.gt p{color:var(--mu);margin:0 0 14px;font-size:14px}.gt .er{color:var(--wr);font-size:13px;min-height:18px;margin:8px 0}
+.ro textarea:disabled,.ro input:disabled{opacity:1;-webkit-text-fill-color:var(--ink);background:var(--bg)}
 @media print{.np,.tabs,.bar,button,.tb,.nv{display:none!important}body{background:#fff;color:#000;padding:0}}
 table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}th,td{padding:8px 10px;border-bottom:1px solid var(--ln);text-align:left}th{background:var(--sf);position:sticky;top:0}tr.r{cursor:pointer}tr.r:hover{background:var(--sf)}
 @media(min-width:760px){.nv{display:none}body{padding-bottom:30px}.ts{bottom:24px}.tabs{top:64px}}
@@ -70,21 +71,22 @@ const O=u=>C[u]||(C[u]={al:[],inf:{},vs:[],hm:{},md:[],desc:""});
 const typ=s=>s.name.includes("मा. शा.")?"माध्यमिक":"प्राथमिक";
 function toast(m){const t=$("ts");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display="none",2400)}
 const CFG=window.APP_CONFIG||{},API=/^https:\/\/script\.google\.com\//.test(CFG.API_URL||"")?CFG.API_URL:"";
-let KEY="",dirty=new Set(),ft=null,busy=false;
-try{KEY=localStorage.getItem("rp_key")||"";(JSON.parse(localStorage.getItem("rp_dirty")||"[]")).forEach(x=>dirty.add(x))}catch(e){}
+let KEY="",dirty=new Set(),ft=null,busy=false,ROLE="edit";
+try{KEY=localStorage.getItem("rp_key")||"";ROLE=localStorage.getItem("rp_role")||"edit";(JSON.parse(localStorage.getItem("rp_dirty")||"[]")).forEach(x=>dirty.add(x))}catch(e){}
 function setSy(c,t){const b=$("sy");if(!b)return;b.className="sy np "+c;$("syt").textContent=t}
 function idbPut(k,v){if(!db)return;try{db.transaction("s","readwrite").objectStore("s").put(v,k)}catch(e){}}
 function init(){return new Promise(r=>{try{const o=indexedDB.open("rp-album",1);o.onupgradeneeded=()=>o.result.createObjectStore("s");o.onsuccess=()=>{db=o.result;const k=db.transaction("s").objectStore("s").openCursor();k.onsuccess=e=>{const c=e.target.result;if(c){C[c.key]=c.value;c.continue()}else r()};k.onerror=()=>r()};o.onerror=()=>r()}catch(e){r()}})}
 function useSeed(sd){if(!sd||!sd.D)return false;D=sd.D;T=sd.T||{};B=sd.B||{};MD=sd.MD||[];buildS();S.forEach(applyOv);return true}
 async function api(body){const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({key:KEY},body))});return r.json()}
 function persistDirty(){try{localStorage.setItem("rp_dirty",JSON.stringify([...dirty]))}catch(e){}}
-function save(u){if(!C[u])return;C[u]._t=Date.now();idbPut(u,C[u]);if(API&&KEY){dirty.add(u);persistDirty();setSy("bz","जतन…");clearTimeout(ft);ft=setTimeout(flush,1200)}else if(!db)toast("स्टोरेज उपलब्ध नाही – माहिती फक्त या सत्रापुरती")}
+function save(u){if(!C[u]||ROLE==="view")return;C[u]._t=Date.now();idbPut(u,C[u]);if(API&&KEY){dirty.add(u);persistDirty();setSy("bz","जतन…");clearTimeout(ft);ft=setTimeout(flush,1200)}else if(!db)toast("स्टोरेज उपलब्ध नाही – माहिती फक्त या सत्रापुरती")}
 async function flush(){if(!API||!KEY||!dirty.size)return;try{for(const u of [...dirty]){const r=await api({action:"save",u,obj:C[u]});if(!r.ok){if(r.err==="unauthorized"){logout(true);return}throw new Error(r.err)}dirty.delete(u);persistDirty()}setSy("ok","जतन झाले")}catch(e){setSy("er","ऑफलाइन");toast("Drive वर जतन झाले नाही – नंतर पुन्हा प्रयत्न होईल")}}
 async function doSync(quiet){if(!API||!KEY||busy)return;busy=true;setSy("bz","Sync…");try{const r=await api({action:"get"});if(!r.ok){if(r.err==="unauthorized"){busy=false;logout(true);return}throw new Error(r.err||"error")}
+ ROLE=r.role||"edit";try{localStorage.setItem("rp_role",ROLE)}catch(e){}
  if(r.seed){C.__seed=r.seed;idbPut("__seed",r.seed)}else if(!C.__seed)toast("Drive फोल्डरमध्ये seed.json सापडले नाही");
  const sv=r.data||{};for(const u in sv){const l=C[u];if(!l||(sv[u]._t||0)>(l._t||0)){C[u]=sv[u];idbPut(u,sv[u]);dirty.delete(u)}else if((l._t||0)>(sv[u]._t||0))dirty.add(u)}
  for(const u of [...dirty])if(!C[u])dirty.delete(u);
- persistDirty();useSeed(C.__seed);rr();await flush();setSy("ok","Sync झाले");if(!quiet)toast("Drive शी Sync झाले")}catch(e){setSy("er","ऑफलाइन");if(!quiet)toast("Sync अयशस्वी – इंटरनेट तपासा")}busy=false}
+ persistDirty();useSeed(C.__seed);rr();await flush();setSy("ok",ROLE==="view"?"फक्त पाहणे":"Sync झाले");if(!quiet)toast("Drive शी Sync झाले")}catch(e){setSy("er","ऑफलाइन");if(!quiet)toast("Sync अयशस्वी – इंटरनेट तपासा")}busy=false}
 function gate(err){cur=null;$("nv").style.display="none";$("app").innerHTML='<div class="gt"><div style="font-size:42px">🔐</div><h2>प्रवेश</h2><p>कृपया प्रवेश की (Access Key) टाका</p><input id="gk" type="password" placeholder="Access Key" autocomplete="current-password"><div class="er">'+E(err||"")+'</div><button class="b p" id="gb" style="width:100%">प्रवेश करा</button></div>';
  const go=async()=>{KEY=$("gk").value.trim();if(!KEY)return;try{localStorage.setItem("rp_key",KEY)}catch(e){}$("nv").style.display="";$("app").innerHTML='<p class="note" style="text-align:center;margin-top:30vh">लोड होत आहे…</p>';await doSync(true);if(KEY)rr()};
  $("gb").onclick=go;$("gk").onkeydown=e=>{if(e.key==="Enter")go()};setSy("er","लॉगिन")}
@@ -115,7 +117,7 @@ function galAll(){
  return `<div class="sec"><h3>सर्व फोटो (${n(it.length)})</h3>`+(it.length?'<div class="pg">'+it.map(x=>`<figure><img src="${x[2]}" data-lb="1" alt="${E(x[0])}"><small>${E(x[0])} – ${E(x[1])}${x[3]?"<br>"+E(x[3]):""}</small></figure>`).join("")+"</div>":'<p class="note">अजून फोटो जोडलेले नाहीत. शाळा उघडून "फोटो जोडा" वापरा.</p>')+"</div>";
 }
 function detail(s){
- const T=[["al","फोटो अल्बम"],["inf","पायाभूत सुविधा"],["vs","शैक्षणिक उपक्रम / भेट प्रपत्र"],["st","कर्मचारी"],["md","पोषण आहार व बँक"]];
+ const T=[["al","फोटो अल्बम"],["inf","पायाभूत सुविधा"],["vs","शैक्षणिक उपक्रम / भेट प्रपत्र"],["st","कर्मचारी"],["md","पोषण आहार व बँक"]].filter(t=>ROLE!=="view"||t[0]!=="md");
  return `<div class="np"><button class="b" data-a="back">← सर्व शाळा</button></div><h2 style="margin:10px 0 0">${E(s.name)}</h2><div class="note">UDISE ${s.u} • ${typ(s)} • मुख्याध्यापक: ${E(s.hm)}</div>
  <div class="tabs">${T.map(t=>`<button class="b ${tab===t[0]?"on":""}" data-a="tab:${t[0]}">${t[1]}</button>`).join("")}</div>`+({al:tAl,inf:tInf,vs:tVs,st:tSt,md:tMd}[tab])(s);
 }
@@ -154,11 +156,17 @@ function tMd(s){
  <p class="note">आधार, बँक व PAN तपशील संवेदनशील आहेत. पेज लिंक इतरांना पाठवू नका.</p>`;
 }
 function hvw(){const r=allH();return kpis()+`<div class="bar np"><button class="b" data-a="hv">← शाळा यादी</button><button class="b" data-a="cpm">मदतनीस Excel कॉपी</button></div><div style="overflow-x:auto"><table><thead><tr><th>अ.क्र.</th><th>शाळा</th><th>मदतनीस</th><th>बँक</th><th>खाते क्रमांक</th><th>IFSC</th><th>आधार</th><th>मानधन</th></tr></thead><tbody>${r.map((x,i)=>`<tr class="r" data-a="hrow:${x[0]}"><td>${n(i+1)}</td><td>${E((S.find(s=>s.u===x[0])||{}).name)}</td><td>${E(x[1].nm)}</td><td>${E(x[1].bk)}</td><td>${E(x[1].ac)}</td><td>${E(x[1].if)}</td><td>${x[1].aa?mk(x[1].aa):"—"}</td><td>₹ ${E(x[1].pay)}</td></tr>`).join("")}</tbody></table></div><p class="note">पंक्तीवर क्लिक करून शाळेतील मदतनीस संपादित करा.</p>`}
-function rr(){const s=S.find(x=>x.u===cur);$("app").innerHTML=s?detail(s):(hv?hvw():home());if($("n1")){$("n1").className=!cur&&!hv&&!gl?"on":"";$("n2").className=!cur&&!hv&&gl?"on":"";$("n3").className=!cur&&hv?"on":""}}
+function rr(){if(ROLE==="view"){hv=false;if(tab==="md")tab="al"}const s=S.find(x=>x.u===cur);$("app").innerHTML=s?detail(s):(hv?hvw():home());if($("n1")){$("n1").className=!cur&&!hv&&!gl?"on":"";$("n2").className=!cur&&!hv&&gl?"on":"";$("n3").className=!cur&&hv?"on":""}roLock()}
+function roLock(){const v=ROLE==="view";document.body.classList.toggle("ro",v);const n3=$("n3");if(n3)n3.style.display=v?"none":"";if(!v)return;const ap=$("app");
+ ap.querySelectorAll("textarea,select,input:not(#q):not(#gk)").forEach(i=>{i.disabled=true});
+ ap.querySelectorAll("label.b").forEach(x=>x.remove());
+ ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","ed","hv","cpm"].includes(a))b.remove()});
+ ap.querySelectorAll(".sec").forEach(s=>{const t=s.querySelector("h3");if(t&&/नवीन भेट नोंद|कर्मचारी जोडा/.test(t.textContent))s.remove()})}
 const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs"]);
 const onClick=e=>{
  const l=e.target.closest("[data-lb]");if(l){$("lb").firstChild&&0;$("lb").querySelector("img").src=l.src;$("lb").classList.add("s");return}
  const a=e.target.closest("[data-a]");if(!a)return;const [k,x,y]=a.dataset.a.split(":"),u=cur&&O(cur);
+ if(ROLE==="view"&&(MUT.has(k)||["ed","amd","hv","hv2","hrow","cpm"].includes(k)))return;
  if(k==="home"){cur=null;hv=false;gl=false}else if(k==="gal2"){cur=null;hv=false;gl=true}else if(k==="hv2"){cur=null;hv=true}else if(k==="sync"){doSync();return}else if(k==="logout"){if(confirm("की बदलायची / बाहेर पडायचे?"))logout();return}else if(k==="open"){cur=x;tab="al";scrollTo(0,0)}else if(k==="back")cur=null;else if(k==="tab")tab=x;else if(k==="gal")gl=!gl;
  else if(k==="print"){window.print();return}
  else if(k==="copy"){cp();return}else if(k==="cps"||k==="cpm"){cp2(k);return}
@@ -170,7 +178,7 @@ const onClick=e=>{
 $("app").addEventListener("click",onClick);$("nv").addEventListener("click",onClick);
 $("app").addEventListener("change",async e=>{
  const t=e.target;
- if(t.id==="q")return;
+ if(t.id==="q"||ROLE==="view")return;
  if(t.dataset.k&&cur){let val=t.value;
  if(/[._]aa$/.test(t.dataset.k)){val=val.replace(/\s/g,"");if(val&&!/^\d{12}$/.test(val)){toast("आधार क्रमांक १२ अंकी असावा");t.value="";return}}
  setp(O(cur),t.dataset.k,val);save(cur);if(t.dataset.k.startsWith("ov."))applyOv(S.find(s=>s.u===cur));return}
