@@ -1,0 +1,5 @@
+# Never commit personal data (bank, mobile, email details)
+seed.json
+db.json
+*.json
+!package.json
