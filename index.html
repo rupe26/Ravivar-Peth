@@ -417,8 +417,9 @@ function prAll(){PB=false;const t=[0,0,0,0,0,0,0,0];
 
 /* ===== Monthly शालेय पोषण आहार report (rice account + expense) ===== */
 const MMN=["जानेवारी","फेब्रुवारी","मार्च","एप्रिल","मे","जून","जुलै","ऑगस्ट","सप्टेंबर","ऑक्टोबर","नोव्हेंबर","डिसेंबर"],MMG=["इ. 1 ते 5","इ. 6 ते 8"],MMR={"इ. 1 ते 5":{r:0.100,e:2.59},"इ. 6 ते 8":{r:0.150,e:3.88}};
+const nd=s=>String(s??"").replace(/[\u0966-\u096F]/g,d=>d.charCodeAt(0)-0x966).replace(/\s+/g," ").trim(),gk=g=>{const s=nd(g);return /6|8/.test(s)?MMG[1]:/1|5/.test(s)?MMG[0]:s};
 const mmF3=v=>Math.round(v*1000)/1000,mmF2=v=>Math.round(v*100)/100;
-function mmCalc(e){const rt=MMR[e.g],b=+e.ben||0,tot=(+e.prev||0)+(+e.recv||0),ck=rt&&e.ben!==""&&e.ben!=null?b*rt.r:0;return {tot:mmF3(tot),ck:mmF3(ck),bal:mmF3(tot-ck),ex:rt&&e.ben!==""&&e.ben!=null?mmF2(b*rt.e):0}}
+function mmCalc(e){const rt=MMR[gk(e.g)],b=+e.ben||0,tot=(+e.prev||0)+(+e.recv||0),ck=rt&&e.ben!==""&&e.ben!=null?b*rt.r:0;return {tot:mmF3(tot),ck:mmF3(ck),bal:mmF3(tot-ck),ex:rt&&e.ben!==""&&e.ben!=null?mmF2(b*rt.e):0}}
 function tMm(s){
  return `<div class="sec"><h3>मासिक पोषण आहार नोंदी (MDM फॉर्म – Google Sheet)</h3><div class="np" style="margin-bottom:8px"><button class="b" data-a="mdxr">🔄 रिफ्रेश</button></div><div id="mdxbox"><p class="note">लोड होत आहे…</p></div></div>`+(setTimeout(()=>mdxFill(s.u),0),"")}
 
@@ -428,7 +429,7 @@ const MDX_ORD=["savedAt","classGroup","school","udise","reportMonth","reportYear
 let MDX={rows:null,err:"",busy:false};
 function mdxParse(d){const head=(d.head||[]).map(h=>String(h).trim()),named=MDX_ORD.every(k=>head.includes(k)||k==="savedAt"||k==="school")&&head.includes("udise");
  const ix=k=>named?head.indexOf(k):MDX_ORD.indexOf(k),m=new Map();
- (d.rows||[]).forEach(r=>{const g=k=>{const i=ix(k);return i<0?"":(r[i]??"")},o={};MDX_ORD.forEach(k=>o[k]=g(k));if(!String(o.udise).trim())return;m.set([String(o.udise).trim(),o.classGroup,o.reportMonth,String(o.reportYear)].join("|"),o)});
+ (d.rows||[]).forEach(r=>{const g=k=>{const i=ix(k);return i<0?"":(r[i]??"")},o={};MDX_ORD.forEach(k=>o[k]=nd(g(k)));o.classGroup=gk(o.classGroup);if(!o.udise)return;m.set([String(o.udise).trim(),o.classGroup,o.reportMonth,String(o.reportYear)].join("|"),o)});
  return [...m.values()]}
 async function mdxFill(u,force){const box=$("mdxbox");if(!box)return;
  if(MDX.rows&&!force){box.innerHTML=mdxHtml(u);return}
@@ -473,7 +474,7 @@ function mmAdd(u){const v=i=>$(i).value.trim(),g=v("mmg"),m=v("mmm"),y=v("mmy");
  if(!g||!m||!y||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>v(i)==="")){toast("सर्व आवश्यक (*) रकाने भरा");return false}
  if(+v("mmdays")>31||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>+v(i)<0)){toast("कार्यदिवस 31 पेक्षा जास्त किंवा ऋण संख्या चालणार नाही");return false}
  const e={g,m,y,pat:v("mmpat"),days:v("mmdays"),ben:v("mmben"),prev:v("mmprev"),recv:v("mmrecv")};
- u.mm=u.mm||[];const i=u.mm.findIndex(z=>z.g===g&&z.m===m&&String(z.y)===String(y));
+ u.mm=u.mm||[];const i=u.mm.findIndex(z=>gk(z.g)===g&&z.m===m&&String(z.y)===String(y));
  if(i>=0){if(!confirm("या इयत्ता गटाची व महिन्याची नोंद आधीच आहे. बदलायची का?"))return false;u.mm[i]=e}else u.mm.push(e);
  toast("पोषण आहार नोंद जतन केली");return true}
 ["input","change"].forEach(ev=>$("app").addEventListener(ev,e=>{if(e.target.id&&e.target.id.indexOf("mm")===0)mmLive()}));
