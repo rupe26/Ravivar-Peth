@@ -132,7 +132,7 @@ function kpis(){
 }
 function home(){
  const a=S.filter(s=>!q||(s.name+s.u+s.hm+(T[s.u]||[]).map(x=>x[0]).join(' ')).toLowerCase().includes(q.toLowerCase()));
- return kpis()+`<div class="bar np"><input id="q" type="search" placeholder="शाळा / UDISE / मुख्याध्यापक शोधा…" value="${E(q)}"><button class="b a" data-a="gal">सर्व फोटो अल्बम</button><button class="b p" data-a="pall">📄 सर्व शाळा सारांश PDF</button><button class="b" data-a="copy">शाळा Excel कॉपी</button><button class="b" data-a="cps">कर्मचारी Excel कॉपी</button><button class="b" data-a="cpm">मदतनीस Excel कॉपी</button><button class="b a" data-a="hv">मदतनीस तक्ता</button></div>`+
+ return kpis()+`<div class="bar np"><input id="q" type="search" placeholder="शाळा / UDISE / मुख्याध्यापक शोधा…" value="${E(q)}"><button class="b a" data-a="gal">सर्व फोटो अल्बम</button><button class="b p" data-a="pall">📄 सर्व शाळा सारांश PDF</button><button class="b" data-a="copy">शाळा Excel कॉपी</button><button class="b" data-a="cps">कर्मचारी Excel कॉपी</button><button class="b" data-a="cpm">मदतनीस Excel कॉपी</button><button class="b a" data-a="hv">मदतनीस तक्ता</button><button class="b p" data-a="mdxp">🍚 MDM मासिक प्रिंट (A4)</button></div>`+
  (gl?galAll():"")+`<div class="g">`+a.map(s=>{const o=C[s.u],p=o&&(o.al[0]?.d||Object.values(o.inf).flatMap(x=>x.p||[])[0]);
  return `<button class="c" data-a="open:${s.u}"><div class="th">${p?`<img src="${p}" alt="">`:E(s.name.replace("जि. प. प्रा. शा. ","")[0])}</div><div class="cb"><h3>${E(s.name)}</h3><small>UDISE ${s.u} • ${E(s.hm)}</small><br><span class="tg">विद्यार्थी ${n(s.b+s.g)}</span><span class="tg">शिक्षक ${n(s.wt)}/${n(s.st)}</span>${s.rp+s.dg?`<span class="tg w2">दुरुस्ती ${n(s.rp+s.dg)} खोल्या</span>`:""}${s.nw?`<span class="tg w2">नवीन ${n(s.nw)}</span>`:""}<span class="tg">फोटो ${n(photos(s.u))}</span></div></button>`}).join("")+"</div>";
 }
@@ -193,7 +193,7 @@ const onClick=e=>{
  if(ROLE==="view"&&(MUT.has(k)||["ed","amd","hv","hv2","hrow","cpm"].includes(k)))return;
  if(k==="home"){cur=null;hv=false;gl=false}else if(k==="gal2"){cur=null;hv=false;gl=true}else if(k==="hv2"){cur=null;hv=true}else if(k==="sync"){doSync();return}else if(k==="logout"){if(confirm("की बदलायची / बाहेर पडायचे?"))logout();return}else if(k==="open"){cur=x;tab="al";scrollTo(0,0)}else if(k==="back")cur=null;else if(k==="tab")tab=x;else if(k==="gal")gl=!gl;
  else if(k==="print"){window.print();return}else if(k==="amm"){if(!mmAdd(u))return}else if(k==="dmm"){u.mm.splice(+x,1)}else if(k==="pschool"){const z=S.find(q=>q.u===cur);if(z)prSchool(z);return}else if(k==="pv"){const z=S.find(q=>q.u===cur);if(z&&u.vs[+x])prVisit(z,u.vs[+x]);return}else if(k==="pblank"){const z=S.find(q=>q.u===cur);if(z)prVisit(z,null);return}else if(k==="pall"){prAll();return}
- else if(k==="copy"){cp();return}else if(k==="cps"||k==="cpm"){cp2(k);return}
+ else if(k==="mdxp"){mdxPrintDlg();return}else if(k==="mdxr"){mdxFill(cur,true);return}else if(k==="copy"){cp();return}else if(k==="cps"||k==="cpm"){cp2(k);return}
  else if(k==="dal")u.al.splice(+x,1);else if(k==="dpi")u.inf["i"+x].p.splice(+y,1);
  else if(k==="ast"){const v=i=>$(i).value.trim();if(!v("sn")){toast("कर्मचारीचे नाव लिहा");return}(u.st=u.st||[]).push([v("sn"),v("sp"),v("sm"),"","","",v("sq"),"","",""]);toast("कर्मचारी जोडला")}else if(k==="dst")u.st.splice(+x,1);else if(k==="ed"){em.has(x)?em.delete(x):em.add(x)}else if(k==="xst"||k==="xhp"){setp(u,"ed.x_"+k.slice(1)+"_"+x,1)}else if(k==="hv")hv=!hv;else if(k==="hrow"){cur=x;tab="md";hv=false;scrollTo(0,0)}else if(k==="amd")u.md.push({});else if(k==="dmd")u.md.splice(+x,1);else if(k==="dvs")u.vs.splice(+x,1);else if(k==="acw")(u.cw=u.cw||[]).push({});else if(k==="dcw")u.cw.splice(+x,1);
  else if(k==="avs"){const v=i=>$(i).value.trim();u.vs.unshift({dt:v("vdt")||new Date().toISOString().slice(0,10),off:v("voff"),c1:v("vc1"),c2:v("vc2"),cl:v("vcl"),tc:v("vtc"),sb:v("vsb"),un:v("vun"),ob:v("vob"),sh:v("vsh"),sp:v("vsp"),rm:v("vrm"),lb:[...document.querySelectorAll("#vlb input:checked")].map(i=>i.value),...vxCollect()});toast("भेट नोंद जतन केली")}
@@ -414,7 +414,52 @@ function tMm(s){const o=O(s.u),L=(o.mm||[]).map((e,i)=>({e,i})).sort((a,b)=>(+b.
  <div><label>मागील शिल्लक तांदूळ (किग्रॅ) *</label><input id="mmprev" type="number" inputmode="decimal" min="0" step="0.01"></div><div><label>प्राप्त तांदूळ (किग्रॅ) *</label><input id="mmrecv" type="number" inputmode="decimal" min="0" step="0.01"></div>
  ${au("mmtot","एकूण तांदूळ")}${au("mmck","एकूण शिजवलेला तांदूळ")}${au("mmbal","शिल्लक तांदूळ")}${au("mmex","एकूण खर्च (₹)")}</div>
  <button class="b p" data-a="amm" style="margin-top:10px">नोंद जतन करा</button></div>
- <div class="sec"><h3>मासिक पोषण आहार नोंदी (${n(L.length)})</h3>${rows?`<div class="ovx"><table class="mini" style="min-width:900px"><thead><tr><th>महिना</th><th>गट</th><th>पट</th><th>कार्यदिवस</th><th>लाभार्थी</th><th>मागील शिल्लक</th><th>प्राप्त</th><th>एकूण तांदूळ</th><th>शिजवलेला</th><th>शिल्लक</th><th>खर्च ₹</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="note">अजून नोंद नाही.</p>'}</div>`}
+ <div class="sec"><h3>मासिक पोषण आहार नोंदी (${n(L.length)})</h3>${rows?`<div class="ovx"><table class="mini" style="min-width:900px"><thead><tr><th>महिना</th><th>गट</th><th>पट</th><th>कार्यदिवस</th><th>लाभार्थी</th><th>मागील शिल्लक</th><th>प्राप्त</th><th>एकूण तांदूळ</th><th>शिजवलेला</th><th>शिल्लक</th><th>खर्च ₹</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="note">अजून नोंद नाही.</p>'}</div>
+ <div class="sec"><h3>MDM फॉर्म वरून आलेल्या नोंदी (Google Sheet)</h3><div class="np" style="margin-bottom:8px"><button class="b" data-a="mdxr">🔄 रिफ्रेश</button></div><div id="mdxbox"><p class="note">लोड होत आहे…</p></div></div>`+(setTimeout(()=>mdxFill(s.u),0),"")}
+
+/* ===== MDM form -> Google Sheet -> shown here (read-only) ===== */
+const MDM_SHEET_URL="https://script.google.com/macros/s/AKfycbxGpmzJQBmUG7f0j-_2YYIdZOpgbr5EgLjfNA9MiWwcXHJOUjDu3Iq5ROhlj7h4WHs/exec";
+const MDX_ORD=["savedAt","classGroup","school","udise","reportMonth","reportYear","pat","prevRice","receivedRice","totalRice","workingDays","beneficiaries","cookedRice","balanceRice","totalExpense"];
+let MDX={rows:null,err:"",busy:false};
+function mdxParse(d){const head=(d.head||[]).map(h=>String(h).trim()),named=MDX_ORD.every(k=>head.includes(k)||k==="savedAt"||k==="school")&&head.includes("udise");
+ const ix=k=>named?head.indexOf(k):MDX_ORD.indexOf(k),m=new Map();
+ (d.rows||[]).forEach(r=>{const g=k=>{const i=ix(k);return i<0?"":(r[i]??"")},o={};MDX_ORD.forEach(k=>o[k]=g(k));if(!String(o.udise).trim())return;m.set([String(o.udise).trim(),o.classGroup,o.reportMonth,String(o.reportYear)].join("|"),o)});
+ return [...m.values()]}
+async function mdxFill(u,force){const box=$("mdxbox");if(!box)return;
+ if(MDX.rows&&!force){box.innerHTML=mdxHtml(u);return}
+ if(MDX.busy)return;MDX.busy=true;box.innerHTML='<p class="note">लोड होत आहे…</p>';
+ try{const r=await fetch(MDM_SHEET_URL+"?action=list&t="+Date.now());const d=await r.json();MDX.rows=mdxParse(d);MDX.err=""}catch(e){MDX.err="माहिती मिळवता आली नाही – इंटरनेट / Apps Script deployment तपासा"}
+ MDX.busy=false;const b=$("mdxbox");if(b)b.innerHTML=mdxHtml(cur||u)}
+function mdxHtml(u){if(MDX.err)return '<p class="note" style="color:var(--wr)">'+E(MDX.err)+'</p>';
+ const L=(MDX.rows||[]).filter(o=>String(o.udise).trim()===String(u)).sort((a,b)=>(+b.reportYear-+a.reportYear)||(MMN.indexOf(b.reportMonth)-MMN.indexOf(a.reportMonth))||String(a.classGroup).localeCompare(String(b.classGroup)));
+ if(!L.length)return '<p class="note">या शाळेची MDM फॉर्म वरून अजून नोंद नाही.</p>';
+ const f=v=>v===""||v==null?"—":n(v);
+ return '<div class="ovx"><table class="mini" style="min-width:900px"><thead><tr><th>महिना</th><th>गट</th><th>पट</th><th>कार्यदिवस</th><th>लाभार्थी</th><th>मागील शिल्लक</th><th>प्राप्त</th><th>एकूण तांदूळ</th><th>शिजवलेला</th><th>शिल्लक</th><th>खर्च ₹</th></tr></thead><tbody>'+L.map(o=>`<tr><td>${E(o.reportMonth)} ${n(o.reportYear)}</td><td>${E(o.classGroup)}</td><td>${f(o.pat)}</td><td>${f(o.workingDays)}</td><td>${f(o.beneficiaries)}</td><td>${f(o.prevRice)}</td><td>${f(o.receivedRice)}</td><td>${f(o.totalRice)}</td><td>${f(o.cookedRice)}</td><td>${f(o.balanceRice)}</td><td>${f(o.totalExpense)}</td></tr>`).join("")+'</tbody></table></div><p class="note">ही यादी फक्त वाचनासाठी आहे (mdm-ravivar-peth फॉर्म मधून). एकाच महिना + गटासाठी शेवटची नोंद दाखवली जाते.</p>'}
+
+/* ===== A4 landscape print: all schools' MDM form data, by class group / month / year ===== */
+async function mdxLoad(force){if(MDX.rows&&!force)return true;try{const r=await fetch(MDM_SHEET_URL+"?action=list&t="+Date.now());MDX.rows=mdxParse(await r.json());MDX.err="";return true}catch(e){MDX.err="x";return false}}
+function mdxPrintDlg(){if($("mdxdlg"))return;const d=document.createElement("div");d.id="mdxdlg";d.className="np";
+ d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:flex;align-items:center;justify-content:center;padding:16px";
+ const yr=new Date().getFullYear(),op=a=>a.map(x=>`<option>${x}</option>`).join("");
+ d.innerHTML=`<div style="background:var(--cd);color:var(--ink);border-radius:var(--r);padding:16px;width:100%;max-width:380px;box-shadow:var(--sh)"><h3 style="margin:0 0 10px">🍚 MDM मासिक प्रिंट (A4 आडवा)</h3>
+ <div class="fl" style="display:grid;gap:10px"><div><label>इयत्ता गट</label><select id="pxg"><option>इ. १ ते ५</option><option>इ. ६ ते ८</option><option>दोन्ही गट (वेगळ्या पानावर)</option></select></div>
+ <div><label>महिना</label><select id="pxm">${op(MMN)}</select></div><div><label>वर्ष</label><input id="pxy" type="number" inputmode="numeric" value="${yr}"></div></div>
+ <p class="note" id="pxs"></p><div style="display:flex;gap:8px;margin-top:10px"><button class="b p" id="pxgo" style="flex:1">प्रिंट / PDF</button><button class="b" id="pxx">रद्द</button></div></div>`;
+ document.body.appendChild(d);$("pxm").selectedIndex=Math.max(0,new Date().getMonth()-1);
+ $("pxx").onclick=()=>d.remove();d.addEventListener("click",e=>{if(e.target===d)d.remove()});
+ $("pxgo").onclick=async()=>{const b=$("pxgo");b.disabled=true;$("pxs").textContent="माहिती लोड होत आहे…";
+  const ok=await mdxLoad(true);b.disabled=false;if(!ok){$("pxs").textContent="माहिती मिळवता आली नाही – इंटरनेट तपासा";return}
+  const g=$("pxg").value,m=$("pxm").value,y=$("pxy").value;d.remove();mdxPrint(g.indexOf("दोन्ही")===0?MMG:[g],m,y)}}
+function mdxPrint(groups,m,y){PB=false;const R=MDX.rows||[],f3=v=>n(mmF3(+v||0)),f2=v=>n(mmF2(+v||0));let h="";
+ groups.forEach((g,gi)=>{let t=[0,0,0,0,0,0,0,0],c=0;
+  const rows=S.map((s,i)=>{const o=R.find(r=>String(r.udise).trim()===String(s.u)&&r.classGroup===g&&r.reportMonth===m&&String(r.reportYear)===String(y));
+   if(!o)return [n(i+1),s.name,s.u,"—","—","—","—","—","—","—","—","—"];
+   c++;const cc=mmCalc({g,ben:o.beneficiaries,prev:o.prevRice,recv:o.receivedRice}),v=[+o.pat||0,+o.workingDays||0,+o.beneficiaries||0,+o.prevRice||0,+o.receivedRice||0,+(o.totalRice===""?cc.tot:o.totalRice)||0,+(o.cookedRice===""?cc.ck:o.cookedRice)||0,+(o.balanceRice===""?cc.bal:o.balanceRice)||0,+(o.totalExpense===""?cc.ex:o.totalExpense)||0];
+   t[0]+=v[0];t[1]+=v[2];t[2]+=v[3];t[3]+=v[4];t[4]+=v[5];t[5]+=v[6];t[6]+=v[7];t[7]+=v[8];
+   return [n(i+1),s.name,s.u,n(v[0]),n(v[1]),n(v[2]),f3(v[3]),f3(v[4]),f3(v[5]),f3(v[6]),f3(v[7]),f2(v[8])]});
+  rows.push(["","एकूण","",n(t[0]),"",n(t[1]),f3(t[2]),f3(t[3]),f3(t[4]),f3(t[5]),f3(t[6]),f2(t[7])]);
+  h+=(gi?'<div style="break-before:page"></div>':"")+pHead("केंद्र रविवार पेठ – शालेय पोषण आहार मासिक अहवाल",g+" • "+m+" "+n(y),"ता. अंबाजोगाई • जि. बीड • नोंद आलेल्या शाळा: "+n(c)+" / "+n(S.length))+`<div class="pen psum">`+pT(["अ.क्र.","शाळेचे नाव","U-DISE","पट","कार्यदिवस","लाभार्थी","मागील शिल्लक (किग्रॅ)","प्राप्त (किग्रॅ)","एकूण तांदूळ","शिजवलेला","शिल्लक","खर्च ₹"],rows)+`</div>`+pSig(["केंद्रप्रमुख","रुपेश पांडुरंग लोंढे"],["गट शिक्षणाधिकारी / अधिकारी",""])});
+ pDoc("MDM मासिक अहवाल – "+m+" "+y,h,true)}
 function mmLive(){const v=i=>$(i)?$(i).value:"";if(!$("mmtot"))return;const e={g:v("mmg"),ben:v("mmben"),prev:v("mmprev"),recv:v("mmrecv")},c=mmCalc(e),has=v("mmprev")!==""||v("mmrecv")!=="";
  $("mmtot").value=has?n(c.tot):"";$("mmck").value=e.ben!==""&&e.g?n(c.ck):"";$("mmbal").value=(has||e.ben!=="")&&e.g?n(c.bal):(has?n(c.bal):"");$("mmex").value=e.ben!==""&&e.g?n(c.ex):""}
 function mmAdd(u){const v=i=>$(i).value.trim(),g=v("mmg"),m=v("mmm"),y=v("mmy");
