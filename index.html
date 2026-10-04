@@ -396,7 +396,7 @@ function prVisit(s,v){PB=!v;v=v||{};const x=v.x||{},X=k=>x[k]||"",o=O(s.u);
 
 /* ---- 3) All-schools summary (landscape) ---- */
 function prAll(){PB=false;const t=[0,0,0,0,0,0,0,0];
- const up=g.indexOf("६")>=0;let sr=0;const rows=S.map((s,i)=>{[s.b,s.g,s.st,s.wt,s.gd,s.rp,s.dg,s.nw].forEach((v,k)=>t[k]+=+v||0);return [n(i+1),s.name,s.u,s.hm,n(s.b),n(s.g),n(s.b+s.g),n(s.st),n(s.wt),n(s.gd),n(s.rp),n(s.dg),n(s.nw)]});
+ const rows=S.map((s,i)=>{[s.b,s.g,s.st,s.wt,s.gd,s.rp,s.dg,s.nw].forEach((v,k)=>t[k]+=+v||0);return [n(i+1),s.name,s.u,s.hm,n(s.b),n(s.g),n(s.b+s.g),n(s.st),n(s.wt),n(s.gd),n(s.rp),n(s.dg),n(s.nw)]});
  rows.push(["","एकूण","","",n(t[0]),n(t[1]),n(t[0]+t[1]),n(t[2]),n(t[3]),n(t[4]),n(t[5]),n(t[6]),n(t[7])]);
  const h=pHead("केंद्र रविवार पेठ","केंद्रातील शाळांचा सारांश","ता. अंबाजोगाई • जि. बीड")+`<div class="psum">`+pT(["अ.क्र.","शाळेचे नाव","U-DISE","मुख्याध्यापक","मुले","मुली","एकूण","मान्य शिक्षक","कार्यरत शिक्षक","सुस्थित खोल्या","दुरुस्ती आव.","धोकादायक","नवीन आव."],rows)+`</div>`+pSig(["केंद्रप्रमुख","रुपेश पांडुरंग लोंढे"],["गट शिक्षणाधिकारी / अधिकारी",""]);
  pDoc("केंद्र रविवार पेठ – शाळांचा सारांश",h,true)}
@@ -443,7 +443,7 @@ function mdxPrintDlg(){if($("mdxdlg"))return;const d=document.createElement("div
   const ok=await mdxLoad(true);b.disabled=false;if(!ok){$("pxs").textContent="माहिती मिळवता आली नाही – इंटरनेट तपासा";return}
   const g=$("pxg").value,m=$("pxm").value,y=$("pxy").value;d.remove();mdxPrint(g.indexOf("दोन्ही")===0?MMG:[g],m,y)}}
 function mdxPrint(groups,m,y){PB=false;const R=MDX.rows||[],f3=v=>n(mmF3(+v||0)),f2=v=>n(mmF2(+v||0));let h="";
- groups.forEach((g,gi)=>{let t=[0,0,0,0,0,0,0,0],c=0;
+ groups.forEach((g,gi)=>{let t=[0,0,0,0,0,0,0,0],c=0,sr=0;const up=g.indexOf("६")>=0;
   const rows=S.map((s,i)=>{const o=R.find(r=>String(r.udise).trim()===String(s.u)&&r.classGroup===g&&r.reportMonth===m&&String(r.reportYear)===String(y));
    if(!o)return up?null:[n(i+1),s.name,s.u,"—","—","—","—","—","—","—","—","—"];
    c++;const cc=mmCalc({g,ben:o.beneficiaries,prev:o.prevRice,recv:o.receivedRice}),v=[+o.pat||0,+o.workingDays||0,+o.beneficiaries||0,+o.prevRice||0,+o.receivedRice||0,+(o.totalRice===""?cc.tot:o.totalRice)||0,+(o.cookedRice===""?cc.ck:o.cookedRice)||0,+(o.balanceRice===""?cc.bal:o.balanceRice)||0,+(o.totalExpense===""?cc.ex:o.totalExpense)||0];
