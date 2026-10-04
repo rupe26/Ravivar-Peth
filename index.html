@@ -141,10 +141,10 @@ function galAll(){
  return `<div class="sec"><h3>सर्व फोटो (${n(it.length)})</h3>`+(it.length?'<div class="pg">'+it.map(x=>`<figure><img src="${x[2]}" data-lb="1" alt="${E(x[0])}"><small>${E(x[0])} – ${E(x[1])}${x[3]?"<br>"+E(x[3]):""}</small></figure>`).join("")+"</div>":'<p class="note">अजून फोटो जोडलेले नाहीत. शाळा उघडून "फोटो जोडा" वापरा.</p>')+"</div>";
 }
 function detail(s){
- const T=[["al","फोटो अल्बम"],["inf","पायाभूत सुविधा"],["vs","शैक्षणिक उपक्रम / भेट प्रपत्र"],["st","कर्मचारी"],["en","पटसंख्या व CWSN"],["yj","योजना: FDA / ULLAS"],["md","पोषण आहार व बँक"]].filter(t=>ROLE!=="view"||t[0]!=="md");
+ const T=[["al","फोटो अल्बम"],["inf","पायाभूत सुविधा"],["vs","शैक्षणिक उपक्रम / भेट प्रपत्र"],["st","कर्मचारी"],["en","पटसंख्या व CWSN"],["yj","योजना: FDA / ULLAS"],["mm","पोषण आहार (मासिक)"],["md","पोषण आहार व बँक"]].filter(t=>ROLE!=="view"||t[0]!=="md");
  return `<div class="np"><button class="b" data-a="back">← सर्व शाळा</button></div><h2 style="margin:10px 0 0">${E(s.name)}</h2><div class="note">UDISE ${s.u} • ${typ(s)} • मुख्याध्यापक: ${E(s.hm)}</div>
  <div class="np" style="margin:8px 0"><button class="b p" data-a="pschool">📄 संपूर्ण माहिती PDF / प्रिंट</button></div>
- <div class="tabs">${T.map(t=>`<button class="b ${tab===t[0]?"on":""}" data-a="tab:${t[0]}">${t[1]}</button>`).join("")}</div>`+({al:tAl,inf:tInf,vs:tVs,st:tSt,md:tMd,en:tEn,yj:tYj}[tab])(s);
+ <div class="tabs">${T.map(t=>`<button class="b ${tab===t[0]?"on":""}" data-a="tab:${t[0]}">${t[1]}</button>`).join("")}</div>`+({al:tAl,inf:tInf,vs:tVs,st:tSt,md:tMd,en:tEn,yj:tYj,mm:tMm}[tab])(s);
 }
 function tAl(s){
  const o=O(s.u),auto=`${s.name} (${typ(s)} शाळा). एकूण पटसंख्या ${n(s.b+s.g)} (मुले ${n(s.b)}, मुली ${n(s.g)}); मान्य शिक्षक ${n(s.st)}, कार्यरत ${n(s.wt)}. वर्गखोल्या: सुस्थितीत ${n(s.gd)}, दुरुस्ती आवश्यक ${n(s.rp)}${s.dg?", धोकादायक "+n(s.dg):""}${s.nw?", नवीन आवश्यक "+n(s.nw):""}. ${s.rm}.`;
@@ -184,15 +184,15 @@ function rr(){if(ROLE==="view"){hv=false;if(tab==="md")tab="al"}const s=S.find(x
 function roLock(){const v=ROLE==="view";document.body.classList.toggle("ro",v);const n3=$("n3");if(n3)n3.style.display=v?"none":"";if(!v)return;const ap=$("app");
  ap.querySelectorAll("textarea,select,input:not(#q):not(#gk)").forEach(i=>{i.disabled=true});
  ap.querySelectorAll("label.b").forEach(x=>x.remove());ap.querySelectorAll("[data-r]").forEach(x=>x.remove());
- ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","ed","hv","cpm"].includes(a))b.remove()});
- ap.querySelectorAll(".sec").forEach(s=>{const t=s.querySelector("h3");if(t&&/नवीन भेट नोंद|कर्मचारी जोडा/.test(t.textContent))s.remove()})}
-const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw"]);
+ ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","ed","hv","cpm"].includes(a))b.remove()});
+ ap.querySelectorAll(".sec").forEach(s=>{const t=s.querySelector("h3");if(t&&/नवीन भेट नोंद|कर्मचारी जोडा|पोषण आहार नोंद जोडा/.test(t.textContent))s.remove()})}
+const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm"]);
 const onClick=e=>{
  const l=e.target.closest("[data-lb]");if(l){$("lb").firstChild&&0;$("lb").querySelector("img").src=l.src;$("lb").classList.add("s");return}
  const a=e.target.closest("[data-a]");if(!a)return;const [k,x,y]=a.dataset.a.split(":"),u=cur&&O(cur);
  if(ROLE==="view"&&(MUT.has(k)||["ed","amd","hv","hv2","hrow","cpm"].includes(k)))return;
  if(k==="home"){cur=null;hv=false;gl=false}else if(k==="gal2"){cur=null;hv=false;gl=true}else if(k==="hv2"){cur=null;hv=true}else if(k==="sync"){doSync();return}else if(k==="logout"){if(confirm("की बदलायची / बाहेर पडायचे?"))logout();return}else if(k==="open"){cur=x;tab="al";scrollTo(0,0)}else if(k==="back")cur=null;else if(k==="tab")tab=x;else if(k==="gal")gl=!gl;
- else if(k==="print"){window.print();return}else if(k==="pschool"){const z=S.find(q=>q.u===cur);if(z)prSchool(z);return}else if(k==="pv"){const z=S.find(q=>q.u===cur);if(z&&u.vs[+x])prVisit(z,u.vs[+x]);return}else if(k==="pblank"){const z=S.find(q=>q.u===cur);if(z)prVisit(z,null);return}else if(k==="pall"){prAll();return}
+ else if(k==="print"){window.print();return}else if(k==="amm"){if(!mmAdd(u))return}else if(k==="dmm"){u.mm.splice(+x,1)}else if(k==="pschool"){const z=S.find(q=>q.u===cur);if(z)prSchool(z);return}else if(k==="pv"){const z=S.find(q=>q.u===cur);if(z&&u.vs[+x])prVisit(z,u.vs[+x]);return}else if(k==="pblank"){const z=S.find(q=>q.u===cur);if(z)prVisit(z,null);return}else if(k==="pall"){prAll();return}
  else if(k==="copy"){cp();return}else if(k==="cps"||k==="cpm"){cp2(k);return}
  else if(k==="dal")u.al.splice(+x,1);else if(k==="dpi")u.inf["i"+x].p.splice(+y,1);
  else if(k==="ast"){const v=i=>$(i).value.trim();if(!v("sn")){toast("कर्मचारीचे नाव लिहा");return}(u.st=u.st||[]).push([v("sn"),v("sp"),v("sm"),"","","",v("sq"),"","",""]);toast("कर्मचारी जोडला")}else if(k==="dst")u.st.splice(+x,1);else if(k==="ed"){em.has(x)?em.delete(x):em.add(x)}else if(k==="xst"||k==="xhp"){setp(u,"ed.x_"+k.slice(1)+"_"+x,1)}else if(k==="hv")hv=!hv;else if(k==="hrow"){cur=x;tab="md";hv=false;scrollTo(0,0)}else if(k==="amd")u.md.push({});else if(k==="dmd")u.md.splice(+x,1);else if(k==="dvs")u.vs.splice(+x,1);else if(k==="acw")(u.cw=u.cw||[]).push({});else if(k==="dcw")u.cw.splice(+x,1);
@@ -353,6 +353,8 @@ function prSchool(s){PB=false;const o=O(s.u),pdf=[`सुस्थितीत $
  h+=pS(no++,"दिव्यांग (CWSN) विद्यार्थी",pCw(o));
  h+=pS(no++,"अन्न सुरक्षा व मानके कायदा (FDA) निकष",pFda(s));
  h+=pS(no++,"योजना विभाग – नवभारत साक्षरता (ULLAS)",pUllas(s));
+ {const mm=(o.mm||[]).slice().sort((a,b)=>(+a.y-+b.y)||(MMN.indexOf(a.m)-MMN.indexOf(b.m))||a.g.localeCompare(b.g)).map(e=>{const c=mmCalc(e);return [e.m+" "+n(e.y),e.g,n(e.pat),n(e.days),n(e.ben),n(mmF3(+e.prev||0)),n(mmF3(+e.recv||0)),n(c.tot),n(c.ck),n(c.bal),n(c.ex)]});
+  if(mm.length)h+=pS(no++,"शालेय पोषण आहार – मासिक नोंदी",pT(["महिना","गट","पट","कार्य-दिवस","लाभार्थी","मागील शिल्लक (किग्रॅ)","प्राप्त (किग्रॅ)","एकूण तांदूळ","शिजवलेला","शिल्लक","खर्च ₹"],mm))}
  h+=pS(no++,"भेट नोंदी सारांश",pT(["अ.क्र.","दिनांक","अधिकारी","वर्ग / शिक्षक / विषय","अभिप्राय"],vs));
  h+=pSig(["मुख्याध्यापक",s.hm],["केंद्रप्रमुख","रुपेश पांडुरंग लोंढे"]);
  pDoc(s.name+" – शाळा माहिती पत्रक",h)}
@@ -398,6 +400,31 @@ function prAll(){PB=false;const t=[0,0,0,0,0,0,0,0];
  rows.push(["","एकूण","","",n(t[0]),n(t[1]),n(t[0]+t[1]),n(t[2]),n(t[3]),n(t[4]),n(t[5]),n(t[6]),n(t[7])]);
  const h=pHead("केंद्र रविवार पेठ","केंद्रातील शाळांचा सारांश","ता. अंबाजोगाई • जि. बीड")+`<div class="psum">`+pT(["अ.क्र.","शाळेचे नाव","U-DISE","मुख्याध्यापक","मुले","मुली","एकूण","मान्य शिक्षक","कार्यरत शिक्षक","सुस्थित खोल्या","दुरुस्ती आव.","धोकादायक","नवीन आव."],rows)+`</div>`+pSig(["केंद्रप्रमुख","रुपेश पांडुरंग लोंढे"],["गट शिक्षणाधिकारी / अधिकारी",""]);
  pDoc("केंद्र रविवार पेठ – शाळांचा सारांश",h,true)}
+
+/* ===== Monthly शालेय पोषण आहार report (rice account + expense) ===== */
+const MMN=["जानेवारी","फेब्रुवारी","मार्च","एप्रिल","मे","जून","जुलै","ऑगस्ट","सप्टेंबर","ऑक्टोबर","नोव्हेंबर","डिसेंबर"],MMG=["इ. १ ते ५","इ. ६ ते ८"],MMR={"इ. १ ते ५":{r:0.100,e:2.59},"इ. ६ ते ८":{r:0.150,e:3.88}};
+const mmF3=v=>Math.round(v*1000)/1000,mmF2=v=>Math.round(v*100)/100;
+function mmCalc(e){const rt=MMR[e.g],b=+e.ben||0,tot=(+e.prev||0)+(+e.recv||0),ck=rt&&e.ben!==""&&e.ben!=null?b*rt.r:0;return {tot:mmF3(tot),ck:mmF3(ck),bal:mmF3(tot-ck),ex:rt&&e.ben!==""&&e.ben!=null?mmF2(b*rt.e):0}}
+function tMm(s){const o=O(s.u),L=(o.mm||[]).map((e,i)=>({e,i})).sort((a,b)=>(+b.e.y-+a.e.y)||(MMN.indexOf(b.e.m)-MMN.indexOf(a.e.m))||a.e.g.localeCompare(b.e.g));
+ const rows=L.map(({e,i})=>{const c=mmCalc(e);return `<tr><td>${E(e.m)} ${n(e.y)}</td><td>${E(e.g)}</td><td>${n(e.pat)}</td><td>${n(e.days)}</td><td>${n(e.ben)}</td><td>${n(mmF3(+e.prev||0))}</td><td>${n(mmF3(+e.recv||0))}</td><td>${n(c.tot)}</td><td>${n(c.ck)}</td><td>${n(c.bal)}</td><td>${n(c.ex)}</td><td><button class="b d np" data-a="dmm:${i}">काढा</button></td></tr>`}).join("");
+ const opt=a=>a.map(x=>`<option>${x}</option>`).join(""),au=(id,l)=>`<div><label>${l} <span class="tg">आपोआप</span></label><input id="${id}" readonly tabindex="-1" style="background:var(--sf)"></div>`;
+ return `<div class="sec"><h3>पोषण आहार नोंद जोडा / बदला</h3><p class="note">इयत्ता १–५: तांदूळ ०.१०० किग्रॅ व खर्च ₹ २.५९ • इयत्ता ६–८: तांदूळ ०.१५० किग्रॅ व खर्च ₹ ३.८८ (प्रति लाभार्थी). तांदूळ किलोग्रॅममध्ये भरा.</p>
+ <div class="fl"><div><label>इयत्ता गट *</label><select id="mmg"><option value=""></option>${opt(MMG)}</select></div><div><label>महिना *</label><select id="mmm"><option value=""></option>${opt(MMN)}</select></div><div><label>वर्ष *</label><input id="mmy" type="number" inputmode="numeric" min="2020" max="2099" value="${new Date().getFullYear()}"></div>
+ <div><label>पट *</label><input id="mmpat" type="number" inputmode="numeric" min="0"></div><div><label>कार्यदिवस *</label><input id="mmdays" type="number" inputmode="numeric" min="0" max="31"></div><div><label>लाभार्थी संख्या *</label><input id="mmben" type="number" inputmode="numeric" min="0"></div>
+ <div><label>मागील शिल्लक तांदूळ (किग्रॅ) *</label><input id="mmprev" type="number" inputmode="decimal" min="0" step="0.01"></div><div><label>प्राप्त तांदूळ (किग्रॅ) *</label><input id="mmrecv" type="number" inputmode="decimal" min="0" step="0.01"></div>
+ ${au("mmtot","एकूण तांदूळ")}${au("mmck","एकूण शिजवलेला तांदूळ")}${au("mmbal","शिल्लक तांदूळ")}${au("mmex","एकूण खर्च (₹)")}</div>
+ <button class="b p" data-a="amm" style="margin-top:10px">नोंद जतन करा</button></div>
+ <div class="sec"><h3>मासिक पोषण आहार नोंदी (${n(L.length)})</h3>${rows?`<div class="ovx"><table class="mini" style="min-width:900px"><thead><tr><th>महिना</th><th>गट</th><th>पट</th><th>कार्यदिवस</th><th>लाभार्थी</th><th>मागील शिल्लक</th><th>प्राप्त</th><th>एकूण तांदूळ</th><th>शिजवलेला</th><th>शिल्लक</th><th>खर्च ₹</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="note">अजून नोंद नाही.</p>'}</div>`}
+function mmLive(){const v=i=>$(i)?$(i).value:"";if(!$("mmtot"))return;const e={g:v("mmg"),ben:v("mmben"),prev:v("mmprev"),recv:v("mmrecv")},c=mmCalc(e),has=v("mmprev")!==""||v("mmrecv")!=="";
+ $("mmtot").value=has?n(c.tot):"";$("mmck").value=e.ben!==""&&e.g?n(c.ck):"";$("mmbal").value=(has||e.ben!=="")&&e.g?n(c.bal):(has?n(c.bal):"");$("mmex").value=e.ben!==""&&e.g?n(c.ex):""}
+function mmAdd(u){const v=i=>$(i).value.trim(),g=v("mmg"),m=v("mmm"),y=v("mmy");
+ if(!g||!m||!y||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>v(i)==="")){toast("सर्व आवश्यक (*) रकाने भरा");return false}
+ if(+v("mmdays")>31||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>+v(i)<0)){toast("कार्यदिवस ३१ पेक्षा जास्त किंवा ऋण संख्या चालणार नाही");return false}
+ const e={g,m,y,pat:v("mmpat"),days:v("mmdays"),ben:v("mmben"),prev:v("mmprev"),recv:v("mmrecv")};
+ u.mm=u.mm||[];const i=u.mm.findIndex(z=>z.g===g&&z.m===m&&String(z.y)===String(y));
+ if(i>=0){if(!confirm("या इयत्ता गटाची व महिन्याची नोंद आधीच आहे. बदलायची का?"))return false;u.mm[i]=e}else u.mm.push(e);
+ toast("पोषण आहार नोंद जतन केली");return true}
+["input","change"].forEach(ev=>$("app").addEventListener(ev,e=>{if(e.target.id&&e.target.id.indexOf("mm")===0)mmLive()}));
 
 boot();
 
