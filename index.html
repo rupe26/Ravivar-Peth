@@ -16,7 +16,7 @@ button,input,select,textarea{font:inherit;color:inherit}:focus-visible{outline:2
 .tb{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#0b3a47,#0f4c5c 55%,#16697e);color:#fff;padding:calc(10px + env(safe-area-inset-top,0px)) 0 12px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
 .tb .w{display:flex;align-items:center;gap:10px}
 .lg{flex:0 0 40px;height:40px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:21px}
-.tt{flex:1;min-width:0}.tt h1{margin:0;font-size:clamp(15px,3.8vw,22px);font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tt p{margin:0;font-size:12px;opacity:.88;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tt{flex:1;min-width:0}.tt h1{margin:0;font-size:clamp(15px,3.8vw,22px);font-weight:800;line-height:1.25;white-space:normal;overflow-wrap:anywhere}.tt p{margin:0;font-size:12px;opacity:.88;white-space:normal;overflow-wrap:anywhere}
 .sy{flex:0 0 auto;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:99px;padding:5px 11px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px}
 .sy i{width:8px;height:8px;border-radius:50%;background:#9aa;display:inline-block}.sy.ok i{background:#4cd697}.sy.bz i{background:#f0b73a;animation:pl 1s infinite}.sy.er i{background:#ff7a5c}
 @keyframes pl{50%{opacity:.3}}
@@ -27,17 +27,17 @@ input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ln);bo
 .b{padding:9px 15px;border:1px solid var(--ln);border-radius:10px;background:var(--cd);cursor:pointer;width:auto;white-space:nowrap;font-size:14px;min-height:40px}.b.p{background:var(--br);color:#fff;border-color:var(--br)}.b.a{background:var(--ac);color:#2a1d00;border-color:var(--ac);font-weight:600}.b.d{color:var(--wr)}
 .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding-bottom:20px}
 .c{background:var(--cd);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;text-align:left;padding:0;cursor:pointer;display:block;width:100%;box-shadow:var(--sh);transition:transform .15s,border-color .15s}.c:hover{border-color:var(--br);transform:translateY(-2px)}
-.th{height:128px;background:linear-gradient(135deg,var(--sf),var(--cd));display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;color:var(--br)}.th img{width:100%;height:100%;object-fit:cover}
+.th{min-height:128px;background:linear-gradient(135deg,var(--sf),var(--cd));display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:800;color:var(--br)}.th img{width:100%;height:auto;display:block;object-fit:contain}
 .cb{padding:12px 14px}.cb h3{margin:0 0 2px;font-size:15px;line-height:1.35}.cb small{color:var(--mu)}
 .tg{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--sf);margin:5px 4px 0 0}.tg.w2{background:var(--ac);color:#2a1d00}
 .tabs{display:flex;gap:6px;overflow-x:auto;margin:12px 0;padding-bottom:4px;position:sticky;top:62px;z-index:5;background:var(--bg);scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs button{flex:0 0 auto}.tabs .on{background:var(--br);color:#fff;border-color:var(--br)}
 .sec{background:var(--cd);border:1px solid var(--ln);border-radius:var(--r);padding:14px;margin-bottom:14px;box-shadow:var(--sh)}.sec h3{margin:0 0 10px;font-size:16px;color:var(--br)}
 .fl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.fl label{font-size:12px;color:var(--mu);display:block;margin-bottom:2px}
-.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}.pg figure{margin:0}.pg img{width:100%;height:124px;object-fit:cover;border-radius:10px;cursor:zoom-in;display:block;background:var(--sf)}.pg input{margin-top:4px;font-size:14px;padding:6px 8px}
+.pg{align-items:start;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}.pg figure{margin:0}.pg img{width:100%;height:auto;object-fit:contain;border-radius:10px;cursor:zoom-in;display:block;background:var(--sf)}.pg input,.pg textarea{margin-top:4px;font-size:14px;padding:6px 8px}
 .pdf{font-size:13px;background:var(--sf);border-radius:10px;padding:8px 12px;margin-bottom:8px}
 .chk{display:flex;flex-wrap:wrap;gap:6px}.chk label{font-size:13px;display:flex;gap:4px;align-items:center;background:var(--bg);padding:5px 10px;border-radius:99px}.chk input{width:auto}
 .rec{border-left:4px solid var(--br);background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:14px}
-.lb{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:30}.lb.s{display:flex}.lb img{max-width:96%;max-height:92%}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:30}.lb.s{display:flex}.lb img{max-width:96%;max-height:92%;width:auto;height:auto;object-fit:contain}
 .ts{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;display:none;z-index:40;font-size:14px;max-width:92%;text-align:center}
 .note{font-size:12px;color:var(--mu)}
 .nv{position:fixed;left:0;right:0;bottom:0;z-index:12;background:var(--cd);border-top:1px solid var(--ln);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(16,40,52,.08)}
@@ -47,9 +47,11 @@ input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ln);bo
 details.vxs{border:1px solid var(--ln);border-radius:12px;margin:8px 0;background:var(--cd)}details.vxs>summary{padding:10px 12px;font-weight:700;color:var(--br);cursor:pointer}details.vxs>div{padding:0 12px 12px}.sub{font-weight:700;margin:10px 0 4px}.tot{background:var(--sf);border-radius:10px;padding:8px 12px;font-weight:700;margin:8px 0}.ovx{overflow-x:auto}table.mini{min-width:0;font-size:13px}table.mini td,table.mini th{padding:5px 6px}table.mini input,table.mini select{padding:7px;font-size:15px}
 
 .pc{text-align:center}
-.entb{min-width:1500px;font-size:13px}.entb th,.entb td{padding:3px 4px;border:1px solid var(--ln);text-align:center}.entb input{width:54px;padding:6px 3px;text-align:center;font-size:15px}
+.entb{font-size:13px}.entb th,.entb td{padding:3px 4px;border:1px solid var(--ln);text-align:center}.entb input{width:54px;padding:6px 3px;text-align:center;font-size:15px}
 .entb .stk{position:sticky;left:0;background:var(--cd);z-index:2;text-align:left;min-width:108px;font-weight:600}.entb thead th{background:var(--sf)}.entb thead th.stk{z-index:4}.entb tfoot td{background:var(--sf);font-weight:700}.entb td.ct,.entb td.rt{background:var(--bg);font-weight:600;min-width:34px}
 #prt{display:none}
+textarea{field-sizing:content}.ag{min-height:42px;resize:none;overflow:hidden;line-height:1.4}
+.enadd{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.enadd select{width:auto;min-width:130px}.entb .rx{border:0;background:none;color:var(--wr);cursor:pointer;font-size:14px;padding:0 4px}
 @page{size:A4;margin:12mm 11mm 14mm}
 @page land{size:A4 landscape;margin:10mm}
 #prt{font-family:"Noto Sans Devanagari","Mukta",system-ui,sans-serif;color:#000;background:#fff;font-size:10pt;line-height:1.35}
@@ -83,7 +85,7 @@ const RA={"सु":"सुस्थितीत (रेलींगसह)","र
 let S=[];const buildS=()=>{S=D.map((r,i)=>({id:i+1,u:r[0],name:r[1][0]==="!"?r[1].slice(1):"जि. प. प्रा. शा. "+r[1],hm:r[2],b:r[3],g:r[4],st:r[5],wt:r[6],gd:r[7],dg:r[8],rp:r[9],am:r[10],nw:r[11],ra:RA[r[12]]||"",kt:KT[r[13]]||"",wl:WL[r[14]]||"",gr:r[15],sp:r[16],rm:r[17],dt:r[18]?"2026-09-0"+r[18]:"",s1:r[19],s2:r[20]}))};
 const IT=["वर्गखोल्या","स्वच्छतागृह (मुले/मुली)","पिण्याचे पाणी","वीज / सोलर","किचन शेड","रॅम्प / रेलींग","संरक्षण भिंत","मैदान","ग्रंथालय / डिजिटल साहित्य","इतर"];
 const LB=["ग्रंथालय","संगणक कक्ष","विज्ञान प्रयोगशाळा","भाषा पेटी","गणित पेटी","FLN किट","अटल टिंकरिंग लॅब","नाविन्यपूर्ण विज्ञान केंद्र","अन्य"];
-const $=i=>document.getElementById(i),n=v=>String(v).replace(/\d/g,d=>"०१२३४५६७८९"[d]);
+const $=i=>document.getElementById(i),n=v=>String(v);
 const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const C={};let db=null,cur=null,tab="al",q="",gl=false,hv=false;const em=new Set(),NUM=["b","g","st","wt","gd","dg","rp","am","nw","s1","s2"];
 const FD=[["name","शाळेचे नाव"],["hm","मुख्याध्यापक"],["b","मुले"],["g","मुली"],["st","मान्य शिक्षक"],["wt","कार्यरत शिक्षक"],["gd","सुस्थित खोल्या"],["dg","धोकादायक खोल्या"],["rp","दुरुस्ती आव. खोल्या"],["am","दुरुस्ती रक्कम (₹)"],["nw","नवीन खोल्या आव."],["ra","रॅम्प"],["kt","किचन शेड स्थिती"],["wl","संरक्षण भिंत"],["gr","मैदान क्षेत्रफळ"],["sp","विशेष उपक्रम"],["rm","अभिप्राय"],["dt","भेट दिनांक"],["s1","शिष्यवृत्ती सहभाग"],["s2","शिष्यवृत्ती पात्र"]];
@@ -181,7 +183,7 @@ function tSt(s){
  const base=L.map((m,i)=>o.ed["x_st_"+i]?"":card(m.map((v,f)=>o.ed[`st_${i}_${f}`]??v),"st_"+i,`ed.st_${i}_`,"xst:"+i)).join("");
  return `<div class="sec"><h3>कर्मचारी</h3>${base||o.st.length?"":'<p class="note">या शाळेसाठी माहिती नाही. खाली जोडा.</p>'}${base}${o.st.map((m,i)=>card(m,"us_"+i,`st.${i}.`,"dst:"+i)).join("")}</div><div class="sec"><h3>कर्मचारी जोडा</h3><div class="fl"><div><label>नाव</label><input id="sn"></div><div><label>पदनाम</label><input id="sp"></div><div><label>मोबाईल</label><input id="sm"></div><div><label>पात्रता</label><input id="sq"></div></div><button class="b p" data-a="ast" style="margin-top:8px">जोडा</button></div>`;
 }
-function hcard(x,k,pre,del){const ed=em.has(k);return `<div class="rec"><b>${E(x.nm)}</b><br>`+(ed?`<div class="fl">${fm(pre+"nm",x.nm,"नाव")}${fm(pre+"bk",x.bk,"बँक")}${fm(pre+"ac",x.ac,"खाते क्रमांक")}${fm(pre+"if",x.if,"IFSC")}${fm(pre+"aa",x.aa,"आधार क्रमांक (१२ अंक)","tel")}${fm(pre+"pay",x.pay,"मानधन (₹)")}</div>`:`${E(x.bk)} • खाते: ${E(x.ac)} • IFSC: ${E(x.if)}<br>आधार: ${x.aa?mk(x.aa):"नोंद नाही"} • मानधन: ₹ ${E(x.pay)}`)+`<br><button class="b np" data-a="ed:${k}">${ed?"पूर्ण":"✏️ संपादन"}</button> <button class="b d np" data-a="${del}">काढा</button></div>`}
+function hcard(x,k,pre,del){const ed=em.has(k);return `<div class="rec"><b>${E(x.nm)}</b><br>`+(ed?`<div class="fl">${fm(pre+"nm",x.nm,"नाव")}${fm(pre+"bk",x.bk,"बँक")}${fm(pre+"ac",x.ac,"खाते क्रमांक")}${fm(pre+"if",x.if,"IFSC")}${fm(pre+"aa",x.aa,"आधार क्रमांक (12 अंक)","tel")}${fm(pre+"pay",x.pay,"मानधन (₹)")}</div>`:`${E(x.bk)} • खाते: ${E(x.ac)} • IFSC: ${E(x.if)}<br>आधार: ${x.aa?mk(x.aa):"नोंद नाही"} • मानधन: ₹ ${E(x.pay)}`)+`<br><button class="b np" data-a="ed:${k}">${ed?"पूर्ण":"✏️ संपादन"}</button> <button class="b d np" data-a="${del}">काढा</button></div>`}
 function tMd(s){
  const o=O(s.u);o.ed=o.ed||{};const h=o.hm,b=B[s.u]||[],m=(T[s.u]||[]).find(x=>x[1].includes("मुख्याध्यापक")),v=(k,d)=>h[k]??d??"";
  const hs=MD.map((x,i)=>x[0]===s.u&&hn(i)?hcard(hn(i),"hp_"+i,`ed.hp_${i}_`,"xhp:"+i):"").join("");
@@ -193,10 +195,10 @@ function hvw(){const r=allH();return kpis()+`<div class="bar np"><button class="
 function rr(){if(ROLE==="view"){hv=false;if(tab==="md")tab="al"}const s=S.find(x=>x.u===cur);$("app").innerHTML=s?detail(s):(hv?hvw():home());if($("n1")){$("n1").className=!cur&&!hv&&!gl?"on":"";$("n2").className=!cur&&!hv&&gl?"on":"";$("n3").className=!cur&&hv?"on":""}roLock();if(document.querySelector(".entb"))enTot()}
 function roLock(){const v=ROLE==="view";document.body.classList.toggle("ro",v);const n3=$("n3");if(n3)n3.style.display=v?"none":"";if(!v)return;const ap=$("app");
  ap.querySelectorAll("textarea,select,input:not(#q):not(#gk)").forEach(i=>{i.disabled=true});
- ap.querySelectorAll("label.b").forEach(x=>x.remove());ap.querySelectorAll("[data-r]").forEach(x=>x.remove());
- ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","ed","hv","cpm"].includes(a))b.remove()});
+ ap.querySelectorAll("label.b").forEach(x=>x.remove());ap.querySelectorAll(".enadd,.rx").forEach(x=>x.remove());ap.querySelectorAll("[data-r]").forEach(x=>x.remove());
+ ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","aen","ren","ed","hv","cpm"].includes(a))b.remove()});
  ap.querySelectorAll(".sec").forEach(s=>{const t=s.querySelector("h3");if(t&&/नवीन भेट नोंद|कर्मचारी जोडा|पोषण आहार नोंद जोडा/.test(t.textContent))s.remove()})}
-const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm"]);
+const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","aen","ren"]);
 const onClick=e=>{
  const l=e.target.closest("[data-lb]");if(l){$("lb").firstChild&&0;$("lb").querySelector("img").src=l.src;$("lb").classList.add("s");return}
  const a=e.target.closest("[data-a]");if(!a)return;const [k,x,y]=a.dataset.a.split(":"),u=cur&&O(cur);
@@ -205,7 +207,7 @@ const onClick=e=>{
  else if(k==="print"){window.print();return}else if(k==="amm"){if(!mmAdd(u))return}else if(k==="dmm"){u.mm.splice(+x,1)}else if(k==="pschool"){const z=S.find(q=>q.u===cur);if(z)mdxLoad().then(()=>prSchool(z));return}else if(k==="pv"){const z=S.find(q=>q.u===cur);if(z&&u.vs[+x])prVisit(z,u.vs[+x]);return}else if(k==="pblank"){const z=S.find(q=>q.u===cur);if(z)prVisit(z,null);return}else if(k==="pall"){prAll();return}
  else if(k==="mdxp"){mdxPrintDlg();return}else if(k==="mdxr"){mdxFill(cur,true);return}else if(k==="copy"){cp();return}else if(k==="cps"||k==="cpm"){cp2(k);return}
  else if(k==="dal")u.al.splice(+x,1);else if(k==="dpi")u.inf["i"+x].p.splice(+y,1);
- else if(k==="ast"){const v=i=>$(i).value.trim();if(!v("sn")){toast("कर्मचारीचे नाव लिहा");return}(u.st=u.st||[]).push([v("sn"),v("sp"),v("sm"),"","","",v("sq"),"","",""]);toast("कर्मचारी जोडला")}else if(k==="dst")u.st.splice(+x,1);else if(k==="ed"){em.has(x)?em.delete(x):em.add(x)}else if(k==="xst"||k==="xhp"){setp(u,"ed.x_"+k.slice(1)+"_"+x,1)}else if(k==="hv")hv=!hv;else if(k==="hrow"){cur=x;tab="md";hv=false;scrollTo(0,0)}else if(k==="amd")u.md.push({});else if(k==="dmd")u.md.splice(+x,1);else if(k==="dvs")u.vs.splice(+x,1);else if(k==="acw")(u.cw=u.cw||[]).push({});else if(k==="dcw")u.cw.splice(+x,1);
+ else if(k==="ast"){const v=i=>$(i).value.trim();if(!v("sn")){toast("कर्मचारीचे नाव लिहा");return}(u.st=u.st||[]).push([v("sn"),v("sp"),v("sm"),"","","",v("sq"),"","",""]);toast("कर्मचारी जोडला")}else if(k==="dst")u.st.splice(+x,1);else if(k==="ed"){em.has(x)?em.delete(x):em.add(x)}else if(k==="xst"||k==="xhp"){setp(u,"ed.x_"+k.slice(1)+"_"+x,1)}else if(k==="hv")hv=!hv;else if(k==="hrow"){cur=x;tab="md";hv=false;scrollTo(0,0)}else if(k==="amd")u.md.push({});else if(k==="dmd")u.md.splice(+x,1);else if(k==="dvs")u.vs.splice(+x,1);else if(k==="acw")(u.cw=u.cw||[]).push({});else if(k==="dcw")u.cw.splice(+x,1);else if(k==="aen"){const sel=$("adst");if(!sel||sel.value==="")toast("इयत्ता निवडा");else setp(u,"en.show",[...new Set([...enVis(u),+sel.value])].sort((a,b)=>a-b))}else if(k==="ren"){const i=+x,has=STUD_CATS.some((c,j)=>+gp(u,`en.m.${i}.${j}.b`)||+gp(u,`en.m.${i}.${j}.g`));if(has)toast("आधी या इयत्तेतील संख्या रिकाम्या करा");else setp(u,"en.show",enVis(u).filter(z=>z!==i&&z>3))}
  else if(k==="avs"){const v=i=>$(i).value.trim();u.vs.unshift({dt:v("vdt")||new Date().toISOString().slice(0,10),off:v("voff"),c1:v("vc1"),c2:v("vc2"),cl:v("vcl"),tc:v("vtc"),sb:v("vsb"),un:v("vun"),ob:v("vob"),sh:v("vsh"),sp:v("vsp"),rm:v("vrm"),lb:[...document.querySelectorAll("#vlb input:checked")].map(i=>i.value),...vxCollect()});toast("भेट नोंद जतन केली")}
  if(cur&&MUT.has(k))save(cur);rr();
 };
@@ -214,7 +216,7 @@ $("app").addEventListener("change",async e=>{
  const t=e.target;
  if(t.id==="q"||ROLE==="view")return;
  if(t.dataset.k&&cur){let val=t.value;
- if(/[._]aa$/.test(t.dataset.k)){val=val.replace(/\s/g,"");if(val&&!/^\d{12}$/.test(val)){toast("आधार क्रमांक १२ अंकी असावा");t.value="";return}}
+ if(/[._]aa$/.test(t.dataset.k)){val=val.replace(/\s/g,"");if(val&&!/^\d{12}$/.test(val)){toast("आधार क्रमांक 12 अंकी असावा");t.value="";return}}
  setp(O(cur),t.dataset.k,val);save(cur);if(t.dataset.k.startsWith("ov."))applyOv(S.find(s=>s.u===cur));return}
  if(t.dataset.f&&cur){const f=[...t.files],o=O(cur);toast("फोटो प्रक्रिया सुरू…");for(const x of f){try{let d=await comp(x);if(API&&KEY){try{const up=await api({action:"photo",name:cur+"_"+Date.now()+".jpg",data:d});if(up.ok)d=up.url;else toast("फोटो Drive वर जाऊ शकला नाही; फक्त या डिव्हाइसवर")}catch(er){toast("ऑफलाइन – फोटो फक्त या डिव्हाइसवर")}}if(t.dataset.f==="al")o.al.push({d,c:""});else{const k=t.dataset.f;(o.inf[k]||(o.inf[k]={})).p=(o.inf[k].p||[]).concat(d)}}catch(er){toast("एक फोटो वाचता आला नाही")}}save(cur);rr();toast("फोटो जोडले")}
 });
@@ -228,26 +230,28 @@ function cp(){
  navigator.clipboard?navigator.clipboard.writeText(t).then(ok,fb):fb();
 }
 function cp2(m){const nm=u=>(S.find(s=>s.u===u)||{}).name||u;
- const R=m==="cps"?[["शाळा","नाव","पद","मोबाईल","ई-मेल","जन्मतारीख","लिंग","पात्रता","प्रवर्ग","नियुक्ती","विषय"]].concat(Object.entries(T).flatMap(([u,a])=>a.map((r,i)=>[nm(u)].concat(r.map((v,f)=>((C[u]||{}).ed||{})[`st_${i}_${f}`]??v))))):[["शाळा","UDISE","मदतनीस","बँक","खाते क्रमांक","IFSC","आधार (शेवटचे ४ अंक)","मानधन"]].concat(allH().map(x=>[nm(x[0]),x[0],x[1].nm,x[1].bk,x[1].ac,x[1].if,mk(x[1].aa),x[1].pay]));
+ const R=m==="cps"?[["शाळा","नाव","पद","मोबाईल","ई-मेल","जन्मतारीख","लिंग","पात्रता","प्रवर्ग","नियुक्ती","विषय"]].concat(Object.entries(T).flatMap(([u,a])=>a.map((r,i)=>[nm(u)].concat(r.map((v,f)=>((C[u]||{}).ed||{})[`st_${i}_${f}`]??v))))):[["शाळा","UDISE","मदतनीस","बँक","खाते क्रमांक","IFSC","आधार (शेवटचे 4 अंक)","मानधन"]].concat(allH().map(x=>[nm(x[0]),x[0],x[1].nm,x[1].bk,x[1].ac,x[1].if,mk(x[1].aa),x[1].pay]));
  const t=R.map(r=>r.join("\t")).join("\n"),ok=()=>toast("कॉपी झाले – Excel मध्ये पेस्ट करा");
  navigator.clipboard?navigator.clipboard.writeText(t).then(ok,()=>toast("कॉपी करता आले नाही")):toast("कॉपी करता आले नाही")}
 /* ===== Added from the school-visit form: enrollment/CWSN, schemes tab, detailed visit form ===== */
-const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","भ ज अ","भ ज ब","भ ज क","भ ज ड","VJNT","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी"],DISAB=["१. पूर्ण अंधत्व (Blindness)","२. अल्पदृष्टी (Low Vision)","३. कुष्ठरोग निवारित (Leprosy Cured Person)","४. कर्णबधिरता (Hearing Impairment - Deaf)","५. ऐकण्यातील दोष (Hard of Hearing)","६. अस्थिव्यंगता (Locomotor Disability)","७. बुटकेपणा (Dwarfism)","८. बौद्धिक अक्षमता (Intellectual Disability)","९. मानसिक आजार (Mental Illness)","१०. मेंदूचा पक्षाघात (Cerebral Palsy)","११. स्वकेंद्रीतता (Autism Spectrum Disorder)","१२. स्नायूंची विकृती (Muscular Dystrophy)","१३. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","१४. अध्ययन अक्षमता (Specific Learning Disabilities)","१५. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","१६. मूकबधिर/वाचा दोष (Speech and Language Disability)","१७. थॅलेसेमिया (Thalassemia)","१८. हिमोफिलिया (Haemophilia)","१९. सिकलसेल ॲनिमिया (Sickle Cell Disease)","२०. बहुविकलांगता (Multiple Disabilities)","२१. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. ४ थी","शिष्यवृत्ती परीक्षा इ. ७ वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
+const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","भ ज अ","भ ज ब","भ ज क","भ ज ड","VJNT","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी","इ 9 वी","इ 10 वी"],DISAB=["1. पूर्ण अंधत्व (Blindness)","2. अल्पदृष्टी (Low Vision)","3. कुष्ठरोग निवारित (Leprosy Cured Person)","4. कर्णबधिरता (Hearing Impairment - Deaf)","5. ऐकण्यातील दोष (Hard of Hearing)","6. अस्थिव्यंगता (Locomotor Disability)","7. बुटकेपणा (Dwarfism)","8. बौद्धिक अक्षमता (Intellectual Disability)","9. मानसिक आजार (Mental Illness)","10. मेंदूचा पक्षाघात (Cerebral Palsy)","11. स्वकेंद्रीतता (Autism Spectrum Disorder)","12. स्नायूंची विकृती (Muscular Dystrophy)","13. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","14. अध्ययन अक्षमता (Specific Learning Disabilities)","15. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","16. मूकबधिर/वाचा दोष (Speech and Language Disability)","17. थॅलेसेमिया (Thalassemia)","18. हिमोफिलिया (Haemophilia)","19. सिकलसेल ॲनिमिया (Sickle Cell Disease)","20. बहुविकलांगता (Multiple Disabilities)","21. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. 4 थी","शिष्यवृत्ती परीक्षा इ. 7 वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
 const YN=["होय","नाही"],HN=["आहे","नाही"],TS=["उपस्थित","गैरहजर","रजेवर","प्रशिक्षणात"];
 const sl=(k,v,l,o)=>`<div><label>${l}</label><select data-k="${k}"><option value=""></option>${o.map(x=>`<option${x===v?" selected":""}>${E(x)}</option>`).join("")}</select></div>`;
 
 /* ---- School-level tab: enrollment by class & category + CWSN register ---- */
-function tEn(s){const o=O(s.u),g=(i,j,k)=>gp(o,`en.m.${i}.${j}.${k}`)??"",nc=ALL_CL.length;
- const h1=`<th rowspan="2" class="stk">प्रवर्ग</th>`+ALL_CL.map(c=>`<th colspan="3" class="pc">${E(c)}</th>`).join("")+`<th colspan="3" class="pc">एकूण</th>`;
+function enVis(o){const s=new Set([0,1,2,3]);(gp(o,"en.show")||[]).forEach(i=>{if(i>=0&&i<ALL_CL.length)s.add(+i)});ALL_CL.forEach((c,i)=>{if(STUD_CATS.some((k,j)=>+gp(o,`en.m.${i}.${j}.b`)||+gp(o,`en.m.${i}.${j}.g`)))s.add(i)});return [...s].sort((a,b)=>a-b)}
+function tEn(s){const o=O(s.u),g=(i,j,k)=>gp(o,`en.m.${i}.${j}.${k}`)??"",V=enVis(o),nc=V.length;
+ const h1=`<th rowspan="2" class="stk">प्रवर्ग</th>`+V.map(i=>`<th colspan="3" class="pc">${E(ALL_CL[i])}${i>3?` <button type="button" class="rx np" data-a="ren:${i}" aria-label="काढा">✕</button>`:""}</th>`).join("")+`<th colspan="3" class="pc">एकूण</th>`;
  const h2="<th>मुले</th><th>मुली</th><th>एकूण</th>".repeat(nc+1);
  const rows=STUD_CATS.map((k,j)=>`<tr data-cj="${j}" data-ex="${EX.has(k)?1:0}"><td class="stk">${E(k)}${EX.has(k)?" *":""}</td>`+
-  ALL_CL.map((c,i)=>`<td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.b" value="${E(g(i,j,"b"))}" aria-label="${E(k)} ${E(c)} मुले"></td><td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.g" value="${E(g(i,j,"g"))}" aria-label="${E(k)} ${E(c)} मुली"></td><td class="pc ct"></td>`).join("")+
+  V.map(i=>`<td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.b" value="${E(g(i,j,"b"))}" aria-label="${E(k)} ${E(ALL_CL[i])} मुले"></td><td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.g" value="${E(g(i,j,"g"))}" aria-label="${E(k)} ${E(ALL_CL[i])} मुली"></td><td class="pc ct"></td>`).join("")+
   `<td class="pc rt"></td><td class="pc rt"></td><td class="pc rt"></td></tr>`).join("");
  const foot=`<tr><td class="stk">एकूण (* वगळून)</td>`+"<td class=\"pc ft\"></td>".repeat(3*(nc+1))+`</tr>`;
+ const hid=ALL_CL.map((c,i)=>i).filter(i=>!V.includes(i)),add=hid.length?`<div class="enadd np"><select id="adst" aria-label="इयत्ता निवडा">${hid.map(i=>`<option value="${i}">${E(ALL_CL[i])}</option>`).join("")}</select><button type="button" class="b p" data-a="aen">+ इयत्ता जोडा</button></div>`:"";
  const cw=(o.cw||[]).map((m,i)=>`<div class="rec"><div class="fl">${fm(`cw.${i}.name`,m.name||"","विद्यार्थ्याचे नाव")}${sl(`cw.${i}.std`,m.std||"","इयत्ता",ALL_CL)}${sl(`cw.${i}.type`,m.type||"","अपंगत्वाचा प्रकार",DISAB)}${fm(`cw.${i}.id`,m.id||"","UDID / ओळख क्र.")}${fm(`cw.${i}.rm`,m.rm||"","विशेष शेरा / गरजा")}</div><button class="b d np" data-a="dcw:${i}" style="margin-top:8px">काढा</button></div>`).join("");
- return `<div class="sec"><h3>वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या</h3><p class="note">* CWSN, अल्पसंख्याक व BPL प्रवर्ग एकूण संख्येत मोजले जात नाहीत. तक्ता डावीकडे-उजवीकडे सरकवा.</p><div class="ovx"><table class="entb"><thead><tr>${h1}</tr><tr>${h2}</tr></thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div>
- <div class="sec"><h3>दिव्यांग (CWSN) विद्यार्थी – RPWD कायदा २०१६ (२१ प्रकार)</h3>${cw||'<p class="note">अजून नोंद नाही.</p>'}<button class="b p np" data-a="acw">+ CWSN विद्यार्थी जोडा</button></div>`}
-function enTot(){const tb=document.querySelector(".entb");if(!tb)return;const nc=ALL_CL.length,tot=Array.from({length:nc+1},()=>[0,0]);
+ return `<div class="sec"><h3>वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या</h3><p class="note">* CWSN, अल्पसंख्याक व BPL प्रवर्ग एकूण संख्येत मोजले जात नाहीत. तक्ता डावीकडे-उजवीकडे सरकवा.</p>${add}<div class="ovx"><table class="entb" data-nc="${nc}"><thead><tr>${h1}</tr><tr>${h2}</tr></thead><tbody>${rows}</tbody><tfoot>${foot}</tfoot></table></div></div>
+ <div class="sec"><h3>दिव्यांग (CWSN) विद्यार्थी – RPWD कायदा 2016 (21 प्रकार)</h3>${cw||'<p class="note">अजून नोंद नाही.</p>'}<button class="b p np" data-a="acw">+ CWSN विद्यार्थी जोडा</button></div>`}
+function enTot(){const tb=document.querySelector(".entb");if(!tb)return;const nc=+tb.dataset.nc||ALL_CL.length,tot=Array.from({length:nc+1},()=>[0,0]);
  tb.querySelectorAll("tbody tr[data-cj]").forEach(tr=>{const ex=tr.dataset.ex==="1",ins=tr.querySelectorAll("input"),ct=tr.querySelectorAll("td.ct"),rt=tr.querySelectorAll("td.rt");let rb=0,rg=0;
   for(let i=0;i<nc;i++){const b=+ins[2*i].value||0,g=+ins[2*i+1].value||0;rb+=b;rg+=g;ct[i].textContent=(b||g)?n(b+g):"";if(!ex){tot[i][0]+=b;tot[i][1]+=g}}
   rt[0].textContent=rb?n(rb):"";rt[1].textContent=rg?n(rg):"";rt[2].textContent=(rb||rg)?n(rb+rg):"";if(!ex){tot[nc][0]+=rb;tot[nc][1]+=rg}});
@@ -255,27 +259,27 @@ function enTot(){const tb=document.querySelector(".entb");if(!tb)return;const nc
 
 /* ---- School-level tab: FDA + ULLAS (pre-filled from seed, editable) ---- */
 function tYj(s){const o=O(s.u),f=FDA[s.u]||{},u=ULLAS[s.u]||{},v=(p,d)=>gp(o,p)??d??"",fs=v("fda.fssai",f.fssai);
- return `<div class="sec"><h3>अन्न सुरक्षा व मानके कायदा (FDA) निकष</h3><div class="fl">${sl("fda.fssai",fs,"FSSAI नोंदणी",YN)}<div id="licw" style="${fs==="होय"?"":"display:none"}"><label>FSSAI परवाना क्रमांक (१४ अंकी)</label><input data-k="fda.lic" inputmode="numeric" maxlength="14" placeholder="१४ अंकी परवाना क्र." value="${E(v("fda.lic",""))}"></div>${sl("fda.hfss",v("fda.hfss",f.hfss),"HFSS फलक",YN)}${sl("fda.nodal",v("fda.nodal",f.nodal),"नोडल अधिकारी",YN)}${sl("fda.aware",v("fda.aware",f.awareness),"जनजागृती",YN)}${fm("fda.helpers",v("fda.helpers",f.helpers),"मदतनीस संख्या","number")}${fm("fda.trained",v("fda.trained",f.trained),"प्रशिक्षित मदतनीस","number")}${sl("fda.tobacco",v("fda.tobacco",f.tobacco),"तंबाखू मुक्त शाळा प्रमाणपत्र",HN)}</div></div>
+ return `<div class="sec"><h3>अन्न सुरक्षा व मानके कायदा (FDA) निकष</h3><div class="fl">${sl("fda.fssai",fs,"FSSAI नोंदणी",YN)}<div id="licw" style="${fs==="होय"?"":"display:none"}"><label>FSSAI परवाना क्रमांक (14 अंकी)</label><input data-k="fda.lic" inputmode="numeric" maxlength="14" placeholder="14 अंकी परवाना क्र." value="${E(v("fda.lic",""))}"></div>${sl("fda.hfss",v("fda.hfss",f.hfss),"HFSS फलक",YN)}${sl("fda.nodal",v("fda.nodal",f.nodal),"नोडल अधिकारी",YN)}${sl("fda.aware",v("fda.aware",f.awareness),"जनजागृती",YN)}${fm("fda.helpers",v("fda.helpers",f.helpers),"मदतनीस संख्या","number")}${fm("fda.trained",v("fda.trained",f.trained),"प्रशिक्षित मदतनीस","number")}${sl("fda.tobacco",v("fda.tobacco",f.tobacco),"तंबाखू मुक्त शाळा प्रमाणपत्र",HN)}</div></div>
  <div class="sec"><h3>योजना विभाग – नवभारत साक्षरता (ULLAS)</h3><div class="fl">${fm("ull.l",v("ull.l",u.learners),"उल्लास ॲपवर नोंद परीक्षार्थी","number")}${fm("ull.v",v("ull.v",u.volunteers),"नोंद स्वयंसेवक","number")}</div><label class="note">अभिप्राय / विशेष उपक्रम</label><textarea data-k="ull.rm">${E(v("ull.rm",""))}</textarea></div>`}
 
 /* ---- Visit form: extra sections (existing fields such as cleanliness, class observation, materials, kits, remarks are NOT repeated) ---- */
 const VX=[
-{k:"att",t:"१. विद्यार्थी व शिक्षक उपस्थिती",f:[["tm","भेटीची वेळ","tm"],["sp","विद्यार्थी – एकूण पट","n"],["su","विद्यार्थी – उपस्थित","n"],["sper","उपस्थिती टक्केवारी","pct","su","sp"],["sg","एक महिन्यापेक्षा जास्त काळ गैरहजर विद्यार्थी (नाव / तपशील)","a"],["tl","","tl"],["ta","शिक्षक अनुपस्थिती / रजा / प्रशिक्षण अभिप्राय","a"]]},
-{k:"nip",t:"२. निपुण महाराष्ट्र अभियान (इ. २ ते ५)",f:[["nip","","tbl",["२ री","३ री","४ थी","५ वी"],[["p","एकूण पट","n"],["n","निपुण संख्या","n"],["u","१००% निपुणसाठी उपक्रम","t"]]]]},
-{k:"sam",t:"३. विद्यार्थ्यांशी संवाद / संपादणूक पडताळणी",f:[["w","इयत्ता / तुकडी / शिक्षक","t"],["l1","प्रथम भाषा","tbl",["वाचन","लेखन","अभिव्यक्ती"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["l2","द्वितीय भाषा","tbl",["वाचन","लेखन","अभिव्यक्ती"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["ma","गणित","tbl",["संख्याज्ञान","संख्यावरील क्रिया","शाब्दिक उदाहरणे"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["sc","विज्ञान (संकल्पना, तत्त्व)","a"],["ss","सामाजिक शास्त्रे","a"],["up","कमी क्षमता प्राप्त विद्यार्थ्यांसाठी उपक्रम / उपाययोजना","a"]]},
-{k:"nar",t:"४. डॉ. जयंत नारळीकर अध्ययन समृद्धी",f:[["a","विद्या विद्यार्थी नोंदणी प्रमाण","t"],["b","वापराचे प्रमाण","t"],["c","प्राविण्य विद्यार्थी प्रमाण","t"]]},
-{k:"cmp",t:"५. विविध स्पर्धा परीक्षा",f:[["cmp","","tbl",SPARDHA,[["n","नियोजन","t"],["m","मागील वर्ष %","t"],["s","शिष्यवृत्तीधारक","t"]]]]},
-{k:"wt",t:"६. शिष्यवृत्ती साप्ताहिक सराव परीक्षा (इ. ४ थी व ७ वी)",f:[["wt","","wt"]]},
-{k:"val",t:"७. मूल्यवर्धन उपक्रम",f:[["a","उपक्रमाचे आयोजन","y",YN],["b","अंमलबजावणी अभिप्राय","a"]]},
-{k:"mar",t:"८. मराठी भाषेचे अध्यापन सक्ती",f:[["a","अंमलबजावणी","y",YN],["b","प्रशिक्षण आवश्यक","y",YN],["c","प्रशिक्षण झाले","y",YN],["d","अभिप्राय","a"]]},
-{k:"saf",t:"९. विद्यार्थी सुरक्षा उपाययोजना",f:[["saf","","tbl",["विद्यार्थी सुरक्षा व भौतिक सुविधा विकसन समिती","सखी सावित्री समिती","तक्रार पेटी","चाइल्ड हेल्प लाईन नंबर","CCTV कॅमेरा","महिला तक्रार निवारण / अंतर्गत तक्रार समिती"],[["s","स्थिती","y",HN],["a","अभिप्राय","t"]]]]},
-{k:"sat",t:"१०. आनंददायी शनिवार",f:[["a","भेटीच्या आधीच्या शनिवारी घेतलेले उपक्रम","a"]]},
-{k:"pm",t:"११. PM POSHAN – भेटीतील तपासणी",f:[["w","स्वयंपाकी / मदतनीस नाव","t"],["o","On-Line उपस्थिती","y",YN],["m","मेनू","t"],["c","चव रजिस्टर","t"],["s","धान्यादी माल साठवणूक","t"],["k","किचन शेड, स्वच्छता, मदतनीस अभिप्राय","a"]]},
-{k:"alu",t:"१२. माजी विद्यार्थी संघ",f:[["a","स्थापना","y",YN],["b","मेळावा / बैठक (दिनांक)","t"],["c","उपलब्धी","t"]]},
-{k:"smc",t:"१३. SMC मासिक सभा",f:[["n","SMC अध्यक्ष नाव","t"],["a","सभा झाली का?","y",YN],["d","सभेचा दिनांक","d"],["u","उपस्थित सदस्य","t"]]},
-{k:"spo",t:"१४. खेळ व तयारी",f:[["a","मैदानाची उपलब्धता","t"],["b","सहभाग व यश","t"]]}
+{k:"att",t:"1. विद्यार्थी व शिक्षक उपस्थिती",f:[["tm","भेटीची वेळ","tm"],["sp","विद्यार्थी – एकूण पट","n"],["su","विद्यार्थी – उपस्थित","n"],["sper","उपस्थिती टक्केवारी","pct","su","sp"],["sg","एक महिन्यापेक्षा जास्त काळ गैरहजर विद्यार्थी (नाव / तपशील)","a"],["tl","","tl"],["ta","शिक्षक अनुपस्थिती / रजा / प्रशिक्षण अभिप्राय","a"]]},
+{k:"nip",t:"2. निपुण महाराष्ट्र अभियान (इ. 2 ते 5)",f:[["nip","","tbl",["2 री","3 री","4 थी","5 वी"],[["p","एकूण पट","n"],["n","निपुण संख्या","n"],["u","100% निपुणसाठी उपक्रम","t"]]]]},
+{k:"sam",t:"3. विद्यार्थ्यांशी संवाद / संपादणूक पडताळणी",f:[["w","इयत्ता / तुकडी / शिक्षक","t"],["l1","प्रथम भाषा","tbl",["वाचन","लेखन","अभिव्यक्ती"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["l2","द्वितीय भाषा","tbl",["वाचन","लेखन","अभिव्यक्ती"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["ma","गणित","tbl",["संख्याज्ञान","संख्यावरील क्रिया","शाब्दिक उदाहरणे"],[["p","संपादणूक %","t"],["a","अभिप्राय","t"]]],["sc","विज्ञान (संकल्पना, तत्त्व)","a"],["ss","सामाजिक शास्त्रे","a"],["up","कमी क्षमता प्राप्त विद्यार्थ्यांसाठी उपक्रम / उपाययोजना","a"]]},
+{k:"nar",t:"4. डॉ. जयंत नारळीकर अध्ययन समृद्धी",f:[["a","विद्या विद्यार्थी नोंदणी प्रमाण","t"],["b","वापराचे प्रमाण","t"],["c","प्राविण्य विद्यार्थी प्रमाण","t"]]},
+{k:"cmp",t:"5. विविध स्पर्धा परीक्षा",f:[["cmp","","tbl",SPARDHA,[["n","नियोजन","t"],["m","मागील वर्ष %","t"],["s","शिष्यवृत्तीधारक","t"]]]]},
+{k:"wt",t:"6. शिष्यवृत्ती साप्ताहिक सराव परीक्षा (इ. 4 थी व 7 वी)",f:[["wt","","wt"]]},
+{k:"val",t:"7. मूल्यवर्धन उपक्रम",f:[["a","उपक्रमाचे आयोजन","y",YN],["b","अंमलबजावणी अभिप्राय","a"]]},
+{k:"mar",t:"8. मराठी भाषेचे अध्यापन सक्ती",f:[["a","अंमलबजावणी","y",YN],["b","प्रशिक्षण आवश्यक","y",YN],["c","प्रशिक्षण झाले","y",YN],["d","अभिप्राय","a"]]},
+{k:"saf",t:"9. विद्यार्थी सुरक्षा उपाययोजना",f:[["saf","","tbl",["विद्यार्थी सुरक्षा व भौतिक सुविधा विकसन समिती","सखी सावित्री समिती","तक्रार पेटी","चाइल्ड हेल्प लाईन नंबर","CCTV कॅमेरा","महिला तक्रार निवारण / अंतर्गत तक्रार समिती"],[["s","स्थिती","y",HN],["a","अभिप्राय","t"]]]]},
+{k:"sat",t:"10. आनंददायी शनिवार",f:[["a","भेटीच्या आधीच्या शनिवारी घेतलेले उपक्रम","a"]]},
+{k:"pm",t:"11. PM POSHAN – भेटीतील तपासणी",f:[["w","स्वयंपाकी / मदतनीस नाव","t"],["o","On-Line उपस्थिती","y",YN],["m","मेनू","t"],["c","चव रजिस्टर","t"],["s","धान्यादी माल साठवणूक","t"],["k","किचन शेड, स्वच्छता, मदतनीस अभिप्राय","a"]]},
+{k:"alu",t:"12. माजी विद्यार्थी संघ",f:[["a","स्थापना","y",YN],["b","मेळावा / बैठक (दिनांक)","t"],["c","उपलब्धी","t"]]},
+{k:"smc",t:"13. SMC मासिक सभा",f:[["n","SMC अध्यक्ष नाव","t"],["a","सभा झाली का?","y",YN],["d","सभेचा दिनांक","d"],["u","उपस्थित सदस्य","t"]]},
+{k:"spo",t:"14. खेळ व तयारी",f:[["a","मैदानाची उपलब्धता","t"],["b","सहभाग व यश","t"]]}
 ];
-const wtRow=()=>`<div class="rec wtrow"><div class="fl"><div><label>दिनांक</label><input type="date" class="wd"></div><div><label>इयत्ता</label><select class="ws"><option>४ थी</option><option>७ वी</option><option>४ थी व ७ वी दोन्ही</option></select></div><div><label>एकूण विद्यार्थी</label><input type="number" min="0" class="wt1"></div><div><label>उपस्थित</label><input type="number" min="0" class="wp"></div><div><label>गैरहजर</label><input class="wa" readonly></div></div><button type="button" class="b d" data-r="delrow" style="margin-top:8px">✕ काढा</button></div>`;
+const wtRow=()=>`<div class="rec wtrow"><div class="fl"><div><label>दिनांक</label><input type="date" class="wd"></div><div><label>इयत्ता</label><select class="ws"><option>4 थी</option><option>7 वी</option><option>4 थी व 7 वी दोन्ही</option></select></div><div><label>एकूण विद्यार्थी</label><input type="number" min="0" class="wt1"></div><div><label>उपस्थित</label><input type="number" min="0" class="wp"></div><div><label>गैरहजर</label><input class="wa" readonly></div></div><button type="button" class="b d" data-r="delrow" style="margin-top:8px">✕ काढा</button></div>`;
 function vxStaff(s){const o=O(s.u),ed=o.ed||{};return [...(T[s.u]||[]).map((m,i)=>ed["x_st_"+i]?null:(ed["st_"+i+"_0"]??m[0])),...(o.st||[]).map(m=>m[0])].filter(Boolean)}
 function vxField(sc,f,s){const [k,l,t,a,b]=f,key=sc.k+"."+k,wide='style="grid-column:1/-1"';
  if(t==="n")return `<div><label>${l}</label><input type="number" min="0" inputmode="numeric" data-x="${key}"></div>`;
@@ -285,8 +289,8 @@ function vxField(sc,f,s){const [k,l,t,a,b]=f,key=sc.k+"."+k,wide='style="grid-co
  if(t==="a")return `<div ${wide}><label>${l}</label><textarea data-x="${key}"></textarea></div>`;
  if(t==="y")return `<div><label>${l}</label><select data-x="${key}"><option value=""></option>${a.map(x=>`<option>${x}</option>`).join("")}</select></div>`;
  if(t==="pct")return `<div><label>${l}</label><input data-x="${key}" data-p="${sc.k}.${a}|${sc.k}.${b}" readonly></div>`;
- if(t==="tl"){const nm=vxStaff(s);return `<div ${wide}><div class="sub">शिक्षक उपस्थिती (नोंद व स्थिती)</div>${nm.map(x=>`<div class="tlrow" style="display:flex;gap:8px;margin-bottom:6px;align-items:center"><b data-n style="flex:2;font-size:14px">${E(x)}</b><select class="tls" style="flex:1">${TS.map(z=>`<option>${z}</option>`).join("")}</select></div>`).join("")||'<p class="note">कर्मचारी यादी रिकामी आहे.</p>'}<div class="tot" id="vxtt">शिक्षक: ${n(nm.length)} पैकी ${n(nm.length)} उपस्थित (${nm.length?"१००.०":"०"}%)</div></div>`}
- if(t==="wt")return `<div ${wide}><p class="note">महिन्यातील जास्तीत जास्त ४ सराव परीक्षांची नोंद करा.</p><div id="wtbox"></div><button type="button" class="b" data-r="addwt">+ सराव परीक्षा जोडा</button></div>`;
+ if(t==="tl"){const nm=vxStaff(s);return `<div ${wide}><div class="sub">शिक्षक उपस्थिती (नोंद व स्थिती)</div>${nm.map(x=>`<div class="tlrow" style="display:flex;gap:8px;margin-bottom:6px;align-items:center"><b data-n style="flex:2;font-size:14px">${E(x)}</b><select class="tls" style="flex:1">${TS.map(z=>`<option>${z}</option>`).join("")}</select></div>`).join("")||'<p class="note">कर्मचारी यादी रिकामी आहे.</p>'}<div class="tot" id="vxtt">शिक्षक: ${n(nm.length)} पैकी ${n(nm.length)} उपस्थित (${nm.length?"100.0":"0"}%)</div></div>`}
+ if(t==="wt")return `<div ${wide}><p class="note">महिन्यातील जास्तीत जास्त 4 सराव परीक्षांची नोंद करा.</p><div id="wtbox"></div><button type="button" class="b" data-r="addwt">+ सराव परीक्षा जोडा</button></div>`;
  if(t==="tbl"){const cell=(c,i)=>{const kk=`${key}.${i}.${c[0]}`;return c[2]==="n"?`<input type="number" min="0" inputmode="numeric" data-x="${kk}">`:c[2]==="y"?`<select data-x="${kk}"><option value=""></option>${c[3].map(x=>`<option>${x}</option>`).join("")}</select>`:`<input data-x="${kk}">`};
   return `<div ${wide}>${l?`<div class="sub">${l}</div>`:""}<div class="ovx"><table class="mini"><thead><tr><th></th>${b.map(c=>`<th>${c[1]}</th>`).join("")}</tr></thead><tbody>${a.map((r,i)=>`<tr><td>${E(r)}</td>${b.map(c=>`<td>${cell(c,i)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`}
  return ""}
@@ -310,7 +314,7 @@ $("app").addEventListener("input",e=>{const t=e.target;
  if(t.closest(".entb"))enTot()});
 $("app").addEventListener("change",e=>{const t=e.target;if(t.classList&&t.classList.contains("tls"))vxTt();if(t.dataset&&t.dataset.k==="fda.fssai"){const w=$("licw");if(w)w.style.display=t.value==="होय"?"":"none"}});
 $("app").addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(!b)return;const r=b.dataset.r;
- if(r==="addwt"){const bx=$("wtbox");if(bx.children.length>=4){toast("महिन्यातील जास्तीत जास्त ४ परीक्षा नोंदवता येतात");return}bx.insertAdjacentHTML("beforeend",wtRow())}
+ if(r==="addwt"){const bx=$("wtbox");if(bx.children.length>=4){toast("महिन्यातील जास्तीत जास्त 4 परीक्षा नोंदवता येतात");return}bx.insertAdjacentHTML("beforeend",wtRow())}
  else if(r==="delrow")b.closest(".rec").remove()});
 /* ===== PDF / print in official format (browser "Save as PDF") ===== */
 let PB=false;
@@ -382,14 +386,14 @@ function prVisit(s,v){PB=!v;v=v||{};const x=v.x||{},X=k=>x[k]||"",o=O(s.u);
  h+=pS(2,"वर्गनिहाय व प्रवर्गनिहाय विद्यार्थी संख्या",pEn(o));
  h+=pS(3,"दिव्यांग (CWSN) विद्यार्थी माहिती",pCw(o));
  h+=pS(4,"स्वच्छता निरीक्षण",pKV([["आ. शालेय परिसर (स्वच्छ / अस्वच्छ / सुशोभनाची आवश्यकता)",v.c1],["ब. विद्यार्थी वैयक्तिक स्वच्छता (गणवेश व शारीरिक स्वच्छता)",v.c2]],1));
- h+=pS(5,"वर्ग अध्यापन निरीक्षण (किमान १ वर्ग १ तासिका)",pKV([["इयत्ता / तुकडी",v.cl],["शिक्षकाचे नाव",v.tc],["विषय",v.sb],["घटक / उपघटक",v.un]])+pKV([["अभिप्राय (विषयाची मांडणी, साहित्य वापर, उदाहरणे / दाखले वापर, प्रश्नोत्तरे / विद्यार्थी प्रतिसाद इ.)",v.ob]],1));
- h+=pS(6,"निपुण महाराष्ट्र अभियान – विद्यार्थी संपादणूक (इयत्ता २ ते ५)",pT(["इयत्ता","एकूण पट","निपुण विद्यार्थी संख्या","१००% निपुण होण्यासाठी प्रयत्न / उपक्रम"],["२ री","३ री","४ थी","५ वी"].map((r,i)=>[{f:r},pN(X(`nip.nip.${i}.p`)),pN(X(`nip.nip.${i}.n`)),X(`nip.nip.${i}.u`)])));
+ h+=pS(5,"वर्ग अध्यापन निरीक्षण (किमान 1 वर्ग 1 तासिका)",pKV([["इयत्ता / तुकडी",v.cl],["शिक्षकाचे नाव",v.tc],["विषय",v.sb],["घटक / उपघटक",v.un]])+pKV([["अभिप्राय (विषयाची मांडणी, साहित्य वापर, उदाहरणे / दाखले वापर, प्रश्नोत्तरे / विद्यार्थी प्रतिसाद इ.)",v.ob]],1));
+ h+=pS(6,"निपुण महाराष्ट्र अभियान – विद्यार्थी संपादणूक (इयत्ता 2 ते 5)",pT(["इयत्ता","एकूण पट","निपुण विद्यार्थी संख्या","100% निपुण होण्यासाठी प्रयत्न / उपक्रम"],["2 री","3 री","4 थी","5 वी"].map((r,i)=>[{f:r},pN(X(`nip.nip.${i}.p`)),pN(X(`nip.nip.${i}.n`)),X(`nip.nip.${i}.u`)])));
  h+=pS(7,"विद्यार्थ्यांशी संवाद / संपादणूक पडताळणी",pKV([["इयत्ता / तुकडी / शिक्षकाचे नाव",X("sam.w")]],1)+
   lang("I) प्रथम भाषा (वाचन, लेखन, अभिव्यक्ती)","l1",["वाचन","लेखन","अभिव्यक्ती"])+lang("II) द्वितीय भाषा (वाचन, लेखन, अभिव्यक्ती)","l2",["वाचन","लेखन","अभिव्यक्ती"])+lang("III) गणित (संख्याज्ञान, संख्यावरील क्रिया, शाब्दिक उदाहरणे)","ma",["संख्याज्ञान","संख्यावरील क्रिया","शाब्दिक उदाहरणे"])+
   pKV([["IV) विज्ञान (संकल्पना, तत्त्व)",X("sam.sc")],["V) सामाजिक शास्त्रे",X("sam.ss")],["VI) आवश्यक क्षमतेपेक्षा कमी क्षमता प्राप्त विद्यार्थ्यांसाठी उपक्रम / उपाययोजना",X("sam.up")]],1));
  h+=pS(8,"डॉ. जयंत नारळीकर अध्ययन समृद्धी",pKV([["विद्या विद्यार्थी नोंदणी प्रमाण",X("nar.a")],["वापराचे प्रमाण",X("nar.b")],["प्राविण्य विद्यार्थी प्रमाण",X("nar.c")]],1));
  h+=pS(9,"विविध स्पर्धा परीक्षा",pT(["परीक्षेचे नाव","नियोजन","मागील वर्ष %","शिष्यवृत्तीधारक संख्या"],SPARDHA.map((r,i)=>[{f:r},X(`cmp.cmp.${i}.n`),X(`cmp.cmp.${i}.m`),X(`cmp.cmp.${i}.s`)])));
- h+=pS(10,"शिष्यवृत्ती साप्ताहिक सराव परीक्षा (इ. ४ थी व ७ वी)",pT(["अ.क्र.","दिनांक","इयत्ता","एकूण विद्यार्थी","उपस्थित","गैरहजर"],(v.wt||[]).map((r,i)=>[n(i+1),pD(r.d),r.s,pN(r.t),pN(r.p),pN(r.a)]),4));
+ h+=pS(10,"शिष्यवृत्ती साप्ताहिक सराव परीक्षा (इ. 4 थी व 7 वी)",pT(["अ.क्र.","दिनांक","इयत्ता","एकूण विद्यार्थी","उपस्थित","गैरहजर"],(v.wt||[]).map((r,i)=>[n(i+1),pD(r.d),r.s,pN(r.t),pN(r.p),pN(r.a)]),4));
  h+=pS(11,"मूल्यवर्धन उपक्रम",pKV([["उपक्रमाचे आयोजन",X("val.a")]],1)+pKV([["अंमलबजावणी अभिप्राय",X("val.b")]],1));
  h+=pS(12,"मराठी भाषेचे अध्यापन सक्ती",pKV([["अंमलबजावणी",X("mar.a")],["प्रशिक्षण आवश्यक",X("mar.b")],["प्रशिक्षण झाले",X("mar.c")]],3)+pKV([["अभिप्राय",X("mar.d")]],1));
  h+=pS(13,"विद्यार्थी सुरक्षेसंदर्भात उपाययोजना",pT(["सुविधा","स्थापना / दर्शनी भागात – आहे / नाही","अभिप्राय"],SAF.map((r,i)=>[{f:r},X(`saf.saf.${i}.s`),X(`saf.saf.${i}.a`)])));
@@ -412,7 +416,7 @@ function prAll(){PB=false;const t=[0,0,0,0,0,0,0,0];
  pDoc("केंद्र रविवार पेठ – शाळांचा सारांश",h,true)}
 
 /* ===== Monthly शालेय पोषण आहार report (rice account + expense) ===== */
-const MMN=["जानेवारी","फेब्रुवारी","मार्च","एप्रिल","मे","जून","जुलै","ऑगस्ट","सप्टेंबर","ऑक्टोबर","नोव्हेंबर","डिसेंबर"],MMG=["इ. १ ते ५","इ. ६ ते ८"],MMR={"इ. १ ते ५":{r:0.100,e:2.59},"इ. ६ ते ८":{r:0.150,e:3.88}};
+const MMN=["जानेवारी","फेब्रुवारी","मार्च","एप्रिल","मे","जून","जुलै","ऑगस्ट","सप्टेंबर","ऑक्टोबर","नोव्हेंबर","डिसेंबर"],MMG=["इ. 1 ते 5","इ. 6 ते 8"],MMR={"इ. 1 ते 5":{r:0.100,e:2.59},"इ. 6 ते 8":{r:0.150,e:3.88}};
 const mmF3=v=>Math.round(v*1000)/1000,mmF2=v=>Math.round(v*100)/100;
 function mmCalc(e){const rt=MMR[e.g],b=+e.ben||0,tot=(+e.prev||0)+(+e.recv||0),ck=rt&&e.ben!==""&&e.ben!=null?b*rt.r:0;return {tot:mmF3(tot),ck:mmF3(ck),bal:mmF3(tot-ck),ex:rt&&e.ben!==""&&e.ben!=null?mmF2(b*rt.e):0}}
 function tMm(s){
@@ -444,7 +448,7 @@ function mdxPrintDlg(){if($("mdxdlg"))return;const d=document.createElement("div
  d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:flex;align-items:center;justify-content:center;padding:16px";
  const yr=new Date().getFullYear(),op=a=>a.map(x=>`<option>${x}</option>`).join("");
  d.innerHTML=`<div style="background:var(--cd);color:var(--ink);border-radius:var(--r);padding:16px;width:100%;max-width:380px;box-shadow:var(--sh)"><h3 style="margin:0 0 10px">🍚 MDM मासिक प्रिंट (A4 आडवा)</h3>
- <div class="fl" style="display:grid;gap:10px"><div><label>इयत्ता गट</label><select id="pxg"><option>इ. १ ते ५</option><option>इ. ६ ते ८</option><option>दोन्ही गट (वेगळ्या पानावर)</option></select></div>
+ <div class="fl" style="display:grid;gap:10px"><div><label>इयत्ता गट</label><select id="pxg"><option>इ. 1 ते 5</option><option>इ. 6 ते 8</option><option>दोन्ही गट (वेगळ्या पानावर)</option></select></div>
  <div><label>महिना</label><select id="pxm">${op(MMN)}</select></div><div><label>वर्ष</label><input id="pxy" type="number" inputmode="numeric" value="${yr}"></div></div>
  <p class="note" id="pxs"></p><div style="display:flex;gap:8px;margin-top:10px"><button class="b p" id="pxgo" style="flex:1">प्रिंट / PDF</button><button class="b" id="pxx">रद्द</button></div></div>`;
  document.body.appendChild(d);$("pxm").selectedIndex=Math.max(0,new Date().getMonth()-1);
@@ -453,7 +457,7 @@ function mdxPrintDlg(){if($("mdxdlg"))return;const d=document.createElement("div
   const ok=await mdxLoad(true);b.disabled=false;if(!ok){$("pxs").textContent="माहिती मिळवता आली नाही – इंटरनेट तपासा";return}
   const g=$("pxg").value,m=$("pxm").value,y=$("pxy").value;d.remove();mdxPrint(g.indexOf("दोन्ही")===0?MMG:[g],m,y)}}
 function mdxPrint(groups,m,y){PB=false;const R=MDX.rows||[],f3=v=>n(mmF3(+v||0)),f2=v=>n(mmF2(+v||0));let h="";
- groups.forEach((g,gi)=>{let t=[0,0,0,0,0,0,0,0],c=0,sr=0;const up=g.indexOf("६")>=0;
+ groups.forEach((g,gi)=>{let t=[0,0,0,0,0,0,0,0],c=0,sr=0;const up=g.indexOf("6")>=0;
   const rows=S.map((s,i)=>{const o=R.find(r=>String(r.udise).trim()===String(s.u)&&r.classGroup===g&&r.reportMonth===m&&String(r.reportYear)===String(y));
    if(!o)return up?null:[n(i+1),s.name,s.u,"—","—","—","—","—","—","—","—","—"];
    c++;const cc=mmCalc({g,ben:o.beneficiaries,prev:o.prevRice,recv:o.receivedRice}),v=[+o.pat||0,+o.workingDays||0,+o.beneficiaries||0,+o.prevRice||0,+o.receivedRice||0,+(o.totalRice===""?cc.tot:o.totalRice)||0,+(o.cookedRice===""?cc.ck:o.cookedRice)||0,+(o.balanceRice===""?cc.bal:o.balanceRice)||0,+(o.totalExpense===""?cc.ex:o.totalExpense)||0];
@@ -467,7 +471,7 @@ function mmLive(){const v=i=>$(i)?$(i).value:"";if(!$("mmtot"))return;const e={g
  $("mmtot").value=has?n(c.tot):"";$("mmck").value=e.ben!==""&&e.g?n(c.ck):"";$("mmbal").value=(has||e.ben!=="")&&e.g?n(c.bal):(has?n(c.bal):"");$("mmex").value=e.ben!==""&&e.g?n(c.ex):""}
 function mmAdd(u){const v=i=>$(i).value.trim(),g=v("mmg"),m=v("mmm"),y=v("mmy");
  if(!g||!m||!y||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>v(i)==="")){toast("सर्व आवश्यक (*) रकाने भरा");return false}
- if(+v("mmdays")>31||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>+v(i)<0)){toast("कार्यदिवस ३१ पेक्षा जास्त किंवा ऋण संख्या चालणार नाही");return false}
+ if(+v("mmdays")>31||["mmpat","mmdays","mmben","mmprev","mmrecv"].some(i=>+v(i)<0)){toast("कार्यदिवस 31 पेक्षा जास्त किंवा ऋण संख्या चालणार नाही");return false}
  const e={g,m,y,pat:v("mmpat"),days:v("mmdays"),ben:v("mmben"),prev:v("mmprev"),recv:v("mmrecv")};
  u.mm=u.mm||[];const i=u.mm.findIndex(z=>z.g===g&&z.m===m&&String(z.y)===String(y));
  if(i>=0){if(!confirm("या इयत्ता गटाची व महिन्याची नोंद आधीच आहे. बदलायची का?"))return false;u.mm[i]=e}else u.mm.push(e);
@@ -476,4 +480,15 @@ function mmAdd(u){const v=i=>$(i).value.trim(),g=v("mmg"),m=v("mmm"),y=v("mmy");
 
 boot();
 
-</script></body></html>
+</script><script>
+/* Show full text: single-line text boxes become wrapping, auto-growing fields */
+(function(){const app=document.getElementById("app");if(!app)return;
+const grow=t=>{t.style.height="auto";const h=t.scrollHeight;if(h>0)t.style.height=(h+2)+"px"};
+function conv(){app.querySelectorAll('input:not([type]),input[type="text"]').forEach(i=>{if(i.id==="q"||i.readOnly)return;const t=document.createElement("textarea");[...i.attributes].forEach(a=>{if(a.name!=="type"&&a.name!=="value")t.setAttribute(a.name,a.value)});t.className=((i.className||"")+" ag").trim();t.rows=1;t.value=i.value;i.replaceWith(t)});app.querySelectorAll("textarea").forEach(grow)}
+new MutationObserver(conv).observe(app,{childList:true,subtree:true});
+app.addEventListener("input",e=>{if(e.target.tagName==="TEXTAREA")grow(e.target)});
+app.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList&&e.target.classList.contains("ag"))e.preventDefault()});
+app.addEventListener("toggle",e=>{if(e.target.querySelectorAll)e.target.querySelectorAll("textarea").forEach(grow)},true);
+addEventListener("resize",()=>app.querySelectorAll("textarea").forEach(grow));conv()})();
+</script>
+</body></html>
