@@ -120,7 +120,17 @@ async function boot(){await init();if(C.__seed)useSeed(C.__seed);
  if(!KEY){gate();return}
  rr();setSy("bz","Sync…");doSync(true)}
 function setp(o,p,v){const a=p.split(".");let x=o;for(let i=0;i<a.length-1;i++)x=x[a[i]]??(x[a[i]]={});x[a[a.length-1]]=v}
-const comp=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);ok(c.toDataURL("image/jpeg",.72))};i.onerror=no;i.src=r.result};r.onerror=no;r.readAsDataURL(f)});
+/* Photos: honour the camera's EXIF orientation so portrait / landscape stay as shot, on every browser */
+const exifOri=buf=>{try{const v=new DataView(buf);if(v.getUint16(0)!==0xFFD8)return 1;let o=2;while(o+4<v.byteLength){const m=v.getUint16(o);o+=2;if(m===0xFFE1){if(v.getUint32(o+2)!==0x45786966)return 1;const t=o+8,le=v.getUint16(t)===0x4949,g16=x=>v.getUint16(x,le),g32=x=>v.getUint32(x,le),ifd=t+g32(t+4),cnt=g16(ifd);for(let i=0;i<cnt;i++){const e=ifd+2+i*12;if(g16(e)===0x0112)return g16(e+8)||1}return 1}if((m&0xFF00)!==0xFF00)break;o+=v.getUint16(o)}}catch(e){}return 1};
+let AUTO_OR=null;const autoOri=()=>AUTO_OR||(AUTO_OR=new Promise(r=>{const i=new Image();i.onload=()=>r(i.width===1&&i.height===2);i.onerror=()=>r(false);i.src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAYAAAAAAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAABAAIDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD50ooor8MP9Uz/2Q=="}));
+const loadImg=u=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=u});
+async function comp(f){const ori=exifOri(await f.arrayBuffer()),url=URL.createObjectURL(f);
+ try{const i=await loadImg(url),auto=await autoOri(),sw=ori>=5&&!auto;let w=i.naturalWidth||i.width,h=i.naturalHeight||i.height;
+  const k=Math.min(1,900/Math.max(w,h)),c=document.createElement("canvas"),x=c.getContext("2d");
+  c.width=Math.round((sw?h:w)*k);c.height=Math.round((sw?w:h)*k);
+  if(!auto&&ori>1){const W=w*k,H=h*k;x.transform(...({2:[-1,0,0,1,W,0],3:[-1,0,0,-1,W,H],4:[1,0,0,-1,0,H],5:[0,1,1,0,0,0],6:[0,1,-1,0,H,0],7:[0,-1,-1,0,H,W],8:[0,-1,1,0,0,W]}[ori]||[1,0,0,1,0,0]));x.drawImage(i,0,0,W,H)}
+  else x.drawImage(i,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg",.72)}finally{URL.revokeObjectURL(url)}}
 const photos=u=>{const o=C[u];return o?o.al.length+Object.values(o.inf).reduce((a,x)=>a+(x.p||[]).length,0):0};
 const fm=(k,v,l,t)=>`<div><label>${l}</label><input ${t?`type="${t}"`:""} data-k="${k}" value="${E(v)}"></div>`;
 const gp=(o,p)=>p.split(".").reduce((x,k)=>x&&x[k],o);
