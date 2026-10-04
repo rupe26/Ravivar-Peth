@@ -62,6 +62,52 @@ window.APP_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycb.../exe
 
 ---
 
+## Two access levels (edit and read-only)
+
+| Key | Who gets it | What they can do |
+|---|---|---|
+| `ACCESS_KEY` | You and data-entry staff | View + edit, add photos, visit notes, helper (मदतनीस) data |
+| `VIEW_KEY` | Everyone else (officers, teachers, visitors) | **Read only**: schools, photos, visit records, staff list. Bank, Aadhaar and helper details are never sent to them. |
+
+Both keys are shown in the Execution log after running `setup()`. To read them later: Apps Script → ⚙ Project Settings → Script Properties.
+
+**Sharing with others:** send the GitHub Pages link and the **VIEW_KEY** only (WhatsApp is fine). They open the link, enter the key, and the app shows a "फक्त पाहणे" (view only) badge. Edit controls are hidden, and the server rejects any save or upload from a view key.
+
+**Already deployed an earlier version?**
+1. Replace the code in Apps Script with the new `Code.gs` and Save.
+2. Run `setup()` again. It only adds the missing `VIEW_KEY`.
+3. **Deploy → Manage deployments → ✏ Edit → Version: New version → Deploy.**
+4. Replace `index.html` on GitHub with the new one.
+
+To cut off a person, change `VIEW_KEY` in Script Properties and share the new one with the others.
+
+## What is in each school (tabs)
+
+| Tab | Contents |
+|---|---|
+| फोटो अल्बम | Description, photos |
+| पायाभूत सुविधा | Infrastructure notes and photos |
+| शैक्षणिक उपक्रम / भेट प्रपत्र | Visit note plus the detailed Mission Nipun form (14 collapsible sections: attendance, Nipun, student interaction, Narlikar, competitive exams, weekly scholarship tests, value education, Marathi, safety, Happy Saturday, PM Poshan check, alumni, SMC, sports) |
+| कर्मचारी | Staff |
+| पटसंख्या व CWSN | One class × category table (boys / girls / total, live totals; CWSN, minority and BPL are not added to totals) and the CWSN register (21 disability types) |
+| योजना: FDA / ULLAS | FDA criteria (with FSSAI licence number when FSSAI registration is "होय") and ULLAS learners and volunteers, pre-filled from `seed.json`, editable |
+| पोषण आहार व बँक | Helpers and bank details (edit key only) |
+
+**Updating from the previous version:** replace `seed.json` in the Drive folder (it now includes FDA and ULLAS data), replace `index.html` on GitHub, and, because `Code.gs` changed, paste the new `Code.gs` and redeploy a new version.
+
+## PDF / print
+
+All print views use the browser print dialog, so one button gives both **print** and **PDF**: choose **Save as PDF** (Android Chrome: Print → Save as PDF; iPhone: Share → Print, then pinch out on the preview).
+
+| Button | Where | Output |
+|---|---|---|
+| 📄 संपूर्ण माहिती PDF / प्रिंट | School page | School information sheet: basic info, infrastructure, staff, enrollment table, CWSN, FDA, ULLAS, visit summary |
+| 📄 भेट प्रपत्र PDF / प्रिंट | Each saved visit | The 21-section visit and supervision form in the official numbering, with signature block |
+| रिकामे भेट प्रपत्र छापा | Visit tab (edit key) | Blank form for filling by hand, school name pre-printed |
+| 📄 सर्व शाळा सारांश PDF | Home page | Landscape table of all schools with totals |
+
+Bank, Aadhaar and helper (मदतनीस) details are never included in any print. Photos are not included; use "अल्बम छापा" for those.
+
 ## How storage works
 
 | Action | What happens |
