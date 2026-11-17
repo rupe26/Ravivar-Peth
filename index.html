@@ -239,7 +239,7 @@ function cp2(m){const nm=u=>(S.find(s=>s.u===u)||{}).name||u;
  const t=R.map(r=>r.join("\t")).join("\n"),ok=()=>toast("कॉपी झाले – Excel मध्ये पेस्ट करा");
  navigator.clipboard?navigator.clipboard.writeText(t).then(ok,()=>toast("कॉपी करता आले नाही")):toast("कॉपी करता आले नाही")}
 /* ===== Added from the school-visit form: enrollment/CWSN, schemes tab, detailed visit form ===== */
-const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","भ ज अ","भ ज ब","भ ज क","भ ज ड","VJNT","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी","इ 9 वी","इ 10 वी"],DISAB=["1. पूर्ण अंधत्व (Blindness)","2. अल्पदृष्टी (Low Vision)","3. कुष्ठरोग निवारित (Leprosy Cured Person)","4. कर्णबधिरता (Hearing Impairment - Deaf)","5. ऐकण्यातील दोष (Hard of Hearing)","6. अस्थिव्यंगता (Locomotor Disability)","7. बुटकेपणा (Dwarfism)","8. बौद्धिक अक्षमता (Intellectual Disability)","9. मानसिक आजार (Mental Illness)","10. मेंदूचा पक्षाघात (Cerebral Palsy)","11. स्वकेंद्रीतता (Autism Spectrum Disorder)","12. स्नायूंची विकृती (Muscular Dystrophy)","13. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","14. अध्ययन अक्षमता (Specific Learning Disabilities)","15. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","16. मूकबधिर/वाचा दोष (Speech and Language Disability)","17. थॅलेसेमिया (Thalassemia)","18. हिमोफिलिया (Haemophilia)","19. सिकलसेल ॲनिमिया (Sickle Cell Disease)","20. बहुविकलांगता (Multiple Disabilities)","21. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. 4 थी","शिष्यवृत्ती परीक्षा इ. 7 वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
+const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","विमुक्त जाती (VJ-A)","भ ज ब","भ ज क","भ ज ड","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी","इ 9 वी","इ 10 वी"],DISAB=["1. पूर्ण अंधत्व (Blindness)","2. अल्पदृष्टी (Low Vision)","3. कुष्ठरोग निवारित (Leprosy Cured Person)","4. कर्णबधिरता (Hearing Impairment - Deaf)","5. ऐकण्यातील दोष (Hard of Hearing)","6. अस्थिव्यंगता (Locomotor Disability)","7. बुटकेपणा (Dwarfism)","8. बौद्धिक अक्षमता (Intellectual Disability)","9. मानसिक आजार (Mental Illness)","10. मेंदूचा पक्षाघात (Cerebral Palsy)","11. स्वकेंद्रीतता (Autism Spectrum Disorder)","12. स्नायूंची विकृती (Muscular Dystrophy)","13. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","14. अध्ययन अक्षमता (Specific Learning Disabilities)","15. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","16. मूकबधिर/वाचा दोष (Speech and Language Disability)","17. थॅलेसेमिया (Thalassemia)","18. हिमोफिलिया (Haemophilia)","19. सिकलसेल ॲनिमिया (Sickle Cell Disease)","20. बहुविकलांगता (Multiple Disabilities)","21. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. 4 थी","शिष्यवृत्ती परीक्षा इ. 7 वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
 const YN=["होय","नाही"],HN=["आहे","नाही"],TS=["उपस्थित","गैरहजर","रजेवर","प्रशिक्षणात"];
 const sl=(k,v,l,o)=>`<div><label>${l}</label><select data-k="${k}"><option value=""></option>${o.map(x=>`<option${x===v?" selected":""}>${E(x)}</option>`).join("")}</select></div>`;
 
@@ -248,7 +248,7 @@ function enVis(o){const s=new Set([0,1,2,3]);(gp(o,"en.show")||[]).forEach(i=>{i
 function tEn(s){const o=O(s.u),g=(i,j,k)=>gp(o,`en.m.${i}.${j}.${k}`)??"",V=enVis(o),nc=V.length;
  const h1=`<th rowspan="2" class="stk">प्रवर्ग</th>`+V.map(i=>`<th colspan="3" class="pc">${E(ALL_CL[i])}${i>3?` <button type="button" class="rx np" data-a="ren:${i}" aria-label="काढा">✕</button>`:""}</th>`).join("")+`<th colspan="3" class="pc">एकूण</th>`;
  const h2="<th>मुले</th><th>मुली</th><th>एकूण</th>".repeat(nc+1);
- const rows=STUD_CATS.map((k,j)=>`<tr data-cj="${j}" data-ex="${EX.has(k)?1:0}"><td class="stk">${E(k)}${EX.has(k)?" *":""}</td>`+
+ const rows=STUD_CATS.map((k,j)=>sdHide(o,j)?"":`<tr data-cj="${j}" data-ex="${EX.has(k)?1:0}"><td class="stk">${E(k)}${EX.has(k)?" *":""}</td>`+
   V.map(i=>`<td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.b" value="${E(g(i,j,"b"))}" aria-label="${E(k)} ${E(ALL_CL[i])} मुले"></td><td><input type="number" min="0" inputmode="numeric" data-k="en.m.${i}.${j}.g" value="${E(g(i,j,"g"))}" aria-label="${E(k)} ${E(ALL_CL[i])} मुली"></td><td class="pc ct"></td>`).join("")+
   `<td class="pc rt"></td><td class="pc rt"></td><td class="pc rt"></td></tr>`).join("");
  const foot=`<tr><td class="stk">एकूण (* वगळून)</td>`+"<td class=\"pc ft\"></td>".repeat(3*(nc+1))+`</tr>`;
@@ -344,7 +344,7 @@ function pEn(o){const g=(i,j,k)=>+gp(o,`en.m.${i}.${j}.${k}`)||0;
  let cl=ALL_CL.map((c,i)=>i).filter(i=>STUD_CATS.some((k,j)=>g(i,j,"b")||g(i,j,"g")));
  if(!cl.length){if(!PB)return `<p class="pnote">पटसंख्या माहिती भरलेली नाही.</p>`;cl=[0,1,2,3,4]}
  const cell=v=>`<td class="pc">${PB||!v?"":n(v)}</td>`,tot=cl.map(()=>[0,0]);let gb=0,gg=0;
- const body=STUD_CATS.map((k,j)=>{let rb=0,rg=0;const cells=cl.map((i,x)=>{const b=g(i,j,"b"),l=g(i,j,"g");rb+=b;rg+=l;if(!EX.has(k)){tot[x][0]+=b;tot[x][1]+=l}return cell(b)+cell(l)+cell(b+l)}).join("");if(!EX.has(k)){gb+=rb;gg+=rg}
+ const body=STUD_CATS.map((k,j)=>{if(!PB&&sdHide(o,j))return"";let rb=0,rg=0;const cells=cl.map((i,x)=>{const b=g(i,j,"b"),l=g(i,j,"g");rb+=b;rg+=l;if(!EX.has(k)){tot[x][0]+=b;tot[x][1]+=l}return cell(b)+cell(l)+cell(b+l)}).join("");if(!EX.has(k)){gb+=rb;gg+=rg}
   return `<tr><td>${E(k)}${EX.has(k)?" *":""}</td>${cells}${cell(rb)}${cell(rg)}${cell(rb+rg)}</tr>`}).join("");
  const fz=v=>`<td class="pc">${PB?"":n(v)}</td>`;
  const foot=`<tr class="pfoot"><td>एकूण (* वगळून)</td>${tot.map(t=>fz(t[0])+fz(t[1])+fz(t[0]+t[1])).join("")}${fz(gb)+fz(gg)+fz(gb+gg)}</tr>`;
@@ -545,7 +545,7 @@ const SDL={},SDU={
 const sdLib=k=>SDL[k]||(SDL[k]=new Promise((ok,no)=>{const e=document.createElement("script");e.src=SDU[k];e.onload=ok;e.onerror=()=>{delete SDL[k];no(new Error("इंटरनेट आवश्यक आहे"))};document.head.appendChild(e)}));
 const GL={M:"मुलगा",F:"मुलगी",O:"इतर"};
 /* file category -> STUD_CATS label */
-const CATMAP={general:"General",open:"General",sc:"अनुसूचित जाती",st:"अनुसूचित जमाती",obc:"OBC",sbc:"SBC",sebc:"SEBC",vjnt:"VJNT",vja:"भ ज अ",ntb:"भ ज ब",ntc:"भ ज क",ntd:"भ ज ड"};
+const CATMAP={general:"General",open:"General",sc:"अनुसूचित जाती",st:"अनुसूचित जमाती",obc:"OBC",sbc:"SBC",sebc:"SEBC",vja:"विमुक्त जाती (VJ-A)",ntb:"भ ज ब",ntc:"भ ज क",ntd:"भ ज ड"};
 const CATMR={"general":"सर्वसाधारण (General)","sc":"अनुसूचित जाती (SC)","st":"अनुसूचित जमाती (ST)","obc":"इतर मागास (OBC)","vja":"विमुक्त जाती (VJ-A)","nt b":"भटक्या जमाती (NT-B)","nt c":"भटक्या जमाती (NT-C)","nt d":"भटक्या जमाती (NT-D)","sbc":"विशेष मागास (SBC)"};
 const catKey=c=>String(c||"").toLowerCase().replace(/[^a-z]/g,"");
 const catLbl=c=>CATMR[String(c).toLowerCase().replace(/[-_]/g," ").replace(/\s+/g," ").trim()]||c;
@@ -558,6 +558,10 @@ const cnt=l=>{let M=0,Fm=0;l.forEach(r=>{if(r.gen==="M")M++;else if(r.gen==="F")
 const sdFiltered=u=>{if(F.u!==u){F.u=u;F.std=F.cat=F.div=F.gen=""}
  return sdRows(u).filter(r=>(!F.std||String(r.sn)===F.std)&&(!F.cat||r.cat===F.cat)&&(!F.div||r.div===F.div)&&(!F.gen||r.gen===F.gen))
  .sort((a,b)=>a.sn-b.sn||a.div.localeCompare(b.div)||a.name.localeCompare(b.name))};
+
+/* hide caste rows with no students when data came from an uploaded file (CWSN / अल्पसंख्याक / BPL stay for manual entry) */
+window.sdHide=function(o,j){if(!o||!(o.stu||o.agg)||EX.has(STUD_CATS[j]))return false;
+ for(let i=0;i<ALL_CL.length;i++)if(+gp(o,`en.m.${i}.${j}.b`)||+gp(o,`en.m.${i}.${j}.g`))return false;return true};
 
 /* ---------- parse uploaded sheet ---------- */
 function pick(r,names){for(const k of names){if(r[k]!==undefined&&String(r[k]).trim()!=="")return String(r[k]).trim()}return""}
@@ -582,7 +586,7 @@ function sdParse(wb){
 
 /* ---------- fill enrollment table (classes x categories) ---------- */
 function sdFill(u){
- const o=O(u),R=sdRows(u),m={};let skipCat={},skipCl=0,skipGen=0;
+ const o=O(u),R=sdRows(u),m={};(o.en=o.en||{}).v=2;let skipCat={},skipCl=0,skipGen=0;
  R.forEach(r=>{
   const ci=r.sn-1,lab=CATMAP[catKey(r.cat)],j=lab?STUD_CATS.indexOf(lab):-1;
   if(ci<0||ci>=ALL_CL.length){skipCl++;return}
@@ -609,7 +613,7 @@ function sdFilt(s){
  return h+"</tbody></table></div>"
 }
 function sdHtml(s){
- const o=O(s.u),st=o.stu;
+ const o=O(s.u),st=o.stu;(o.en=o.en||{}).v=2;
  let h=`<div id="sdash"><div class="sec np"><h3>📥 विद्यार्थी डेटा अपलोड (Excel / CSV)</h3><p class="note">विद्यार्थी पोर्टलवरून डाउनलोड केलेली फाईल निवडा. अपलोड होताच खालील "वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या" तक्ता, "पायाभूत सुविधा" टॅबमधील मुले/मुली संख्या आणि मुख्य डॅशबोर्डवरील पटसंख्या आपोआप अद्ययावत होते (CWSN, अल्पसंख्याक व BPL ओळी तुम्ही हाताने भराव्यात). विद्यार्थ्यांची नावे/जन्मतारीख संवेदनशील आहेत – पेज लिंक इतरांना पाठवू नका.</p>
  <div><label class="b p" style="display:inline-block">📁 फाईल निवडा<input type="file" id="sdf" accept=".xlsx,.xls,.csv" hidden></label> ${st?`<button class="b a" data-a="sdfill">↻ तक्ता पुन्हा भरा</button> <button class="b d" data-a="sddel">डेटा काढा</button>`:""}</div>
  <div class="note" style="margin-top:8px">${st?E(st.f||"फाईल")+" • "+n(st.r.length)+" विद्यार्थी • "+new Date(st.t).toLocaleDateString("en-IN"):"अजून फाईल अपलोड केलेली नाही."}</div></div>`;
@@ -730,7 +734,7 @@ function enAgg(){
  const sch=S.map(s=>{const o=C[s.u]||{},cl=ALL_CL.map((_,i)=>{let b=0,g=0;STUD_CATS.forEach((k,j)=>{if(EX.has(k))return;b+=+gp(o,`en.m.${i}.${j}.b`)||0;g+=+gp(o,`en.m.${i}.${j}.g`)||0});return[b,g]});return{s,cl,has:cl.some(x=>x[0]||x[1])}});
  const vis=ALL_CL.map((_,i)=>i).filter(i=>sch.some(x=>x.cl[i][0]||x.cl[i][1]));
  const m={};ALL_CL.forEach((_,i)=>{m[i]={};STUD_CATS.forEach((k,j)=>{let b=0,g=0;S.forEach(s=>{const o=C[s.u]||{};b+=+gp(o,`en.m.${i}.${j}.b`)||0;g+=+gp(o,`en.m.${i}.${j}.g`)||0});m[i][j]={b,g}})});
- return{sch,vis,o:{en:{m}},miss:sch.filter(x=>!x.has).length}
+ return{sch,vis,o:{agg:true,en:{m}},miss:sch.filter(x=>!x.has).length}
 }
 function enPdf(){
  const a=enAgg();if(!a.vis.length){toast("अजून कोणत्याही शाळेची वर्गनिहाय पटसंख्या भरलेली नाही");return}
@@ -755,13 +759,23 @@ async function enXls(){
  const w1=XLSX.utils.aoa_to_sheet([hd].concat(rows,[fr]));w1["!cols"]=[{wch:6},{wch:42},{wch:14}].concat(hd.slice(3).map(()=>({wch:10})));
  const h2=["प्रवर्ग"];a.vis.forEach(i=>h2.push(ALL_CL[i]+" मुले",ALL_CL[i]+" मुली",ALL_CL[i]+" एकूण"));h2.push("एकूण मुले","एकूण मुली","एकूण");
  const t2=a.vis.map(()=>[0,0]);let g2b=0,g2g=0;
- const r2=STUD_CATS.map((k,j)=>{let rb=0,rg=0;const r=[k+(EX.has(k)?" *":"")];a.vis.forEach((i,t)=>{const{b,g}=a.o.en.m[i][j];rb+=b;rg+=g;if(!EX.has(k)){t2[t][0]+=b;t2[t][1]+=g}r.push(b,g,b+g)});if(!EX.has(k)){g2b+=rb;g2g+=rg}r.push(rb,rg,rb+rg);return r});
+ const r2=STUD_CATS.map((k,j)=>{if(!EX.has(k)&&a.vis.every(i=>!(a.o.en.m[i][j].b||a.o.en.m[i][j].g)))return null;let rb=0,rg=0;const r=[k+(EX.has(k)?" *":"")];a.vis.forEach((i,t)=>{const{b,g}=a.o.en.m[i][j];rb+=b;rg+=g;if(!EX.has(k)){t2[t][0]+=b;t2[t][1]+=g}r.push(b,g,b+g)});if(!EX.has(k)){g2b+=rb;g2g+=rg}r.push(rb,rg,rb+rg);return r}).filter(Boolean);
  const f2=["एकूण (* वगळून)"];t2.forEach(t=>f2.push(t[0],t[1],t[0]+t[1]));f2.push(g2b,g2g,g2b+g2g);
  const w2=XLSX.utils.aoa_to_sheet([h2].concat(r2,[f2]));w2["!cols"]=[{wch:20}].concat(h2.slice(1).map(()=>({wch:10})));
  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,w1,"शाळानिहाय पटसंख्या");XLSX.utils.book_append_sheet(wb,w2,"वर्ग × प्रवर्ग (एकूण)");
  XLSX.writeFile(wb,"Sarva_shala_vargnihay_patsankhya.xlsx")
 }
 const _home=home;home=()=>_home().replace('<button class="b p" data-a="pall">','<button class="b a" data-a="sdenp">📊 वर्गनिहाय पटसंख्या PDF</button><button class="b a" data-a="sdenx">📗 वर्गनिहाय पटसंख्या Excel</button><button class="b p" data-a="pall">');
+
+/* ---------- one-time migration: VJNT column removed (indices after it shift by one) ---------- */
+function sdMig(){const ch=[];
+ for(const u in C){const o=C[u];if(!o||u==="__seed"||typeof o!=="object"||!o.en||o.en.v>=2)continue;
+  if(o.en.m){const m=o.en.m,nm={};
+   for(const i in m){const r=m[i]||{},x={};for(const j in r){const k=+j;if(k===6)continue;x[k>6?k-1:k]=r[j]}nm[i]=x}
+   o.en.m=nm}
+  o.en.v=2;ch.push(u)}
+ return ch}
+const _rr=rr;rr=function(){const ch=sdMig();ch.forEach(u=>{try{save(u)}catch(e){}});return _rr.apply(this,arguments)};
 
 /* ---------- events (capture on #app so the app's own click handler does not re-render) ---------- */
 const app=document.getElementById("app");
