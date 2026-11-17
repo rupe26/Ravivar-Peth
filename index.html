@@ -239,7 +239,7 @@ function cp2(m){const nm=u=>(S.find(s=>s.u===u)||{}).name||u;
  const t=R.map(r=>r.join("\t")).join("\n"),ok=()=>toast("कॉपी झाले – Excel मध्ये पेस्ट करा");
  navigator.clipboard?navigator.clipboard.writeText(t).then(ok,()=>toast("कॉपी करता आले नाही")):toast("कॉपी करता आले नाही")}
 /* ===== Added from the school-visit form: enrollment/CWSN, schemes tab, detailed visit form ===== */
-const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","भ ज अ","भ ज ब","भ ज क","भ ज ड","विमुक्त जाती(VJ-A)","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी","इ 9 वी","इ 10 वी"],DISAB=["1. पूर्ण अंधत्व (Blindness)","2. अल्पदृष्टी (Low Vision)","3. कुष्ठरोग निवारित (Leprosy Cured Person)","4. कर्णबधिरता (Hearing Impairment - Deaf)","5. ऐकण्यातील दोष (Hard of Hearing)","6. अस्थिव्यंगता (Locomotor Disability)","7. बुटकेपणा (Dwarfism)","8. बौद्धिक अक्षमता (Intellectual Disability)","9. मानसिक आजार (Mental Illness)","10. मेंदूचा पक्षाघात (Cerebral Palsy)","11. स्वकेंद्रीतता (Autism Spectrum Disorder)","12. स्नायूंची विकृती (Muscular Dystrophy)","13. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","14. अध्ययन अक्षमता (Specific Learning Disabilities)","15. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","16. मूकबधिर/वाचा दोष (Speech and Language Disability)","17. थॅलेसेमिया (Thalassemia)","18. हिमोफिलिया (Haemophilia)","19. सिकलसेल ॲनिमिया (Sickle Cell Disease)","20. बहुविकलांगता (Multiple Disabilities)","21. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. 4 थी","शिष्यवृत्ती परीक्षा इ. 7 वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
+const STUD_CATS=["अनुसूचित जाती","अनुसूचित जमाती","भ ज अ","भ ज ब","भ ज क","भ ज ड","VJNT","SBC","SEBC","OBC","General","अल्पसंख्याक","CWSN","BPL"],ALL_CL=["इ 1 ली","इ 2 री","इ 3 री","इ 4 थी","इ 5 वी","इ 6 वी","इ 7 वी","इ 8 वी","इ 9 वी","इ 10 वी"],DISAB=["1. पूर्ण अंधत्व (Blindness)","2. अल्पदृष्टी (Low Vision)","3. कुष्ठरोग निवारित (Leprosy Cured Person)","4. कर्णबधिरता (Hearing Impairment - Deaf)","5. ऐकण्यातील दोष (Hard of Hearing)","6. अस्थिव्यंगता (Locomotor Disability)","7. बुटकेपणा (Dwarfism)","8. बौद्धिक अक्षमता (Intellectual Disability)","9. मानसिक आजार (Mental Illness)","10. मेंदूचा पक्षाघात (Cerebral Palsy)","11. स्वकेंद्रीतता (Autism Spectrum Disorder)","12. स्नायूंची विकृती (Muscular Dystrophy)","13. मज्जासंस्थेशी संबंधित तीव्र आजार (Chronic Neurological Conditions)","14. अध्ययन अक्षमता (Specific Learning Disabilities)","15. मल्टिपल स्क्लेरोसिस (Multiple Sclerosis)","16. मूकबधिर/वाचा दोष (Speech and Language Disability)","17. थॅलेसेमिया (Thalassemia)","18. हिमोफिलिया (Haemophilia)","19. सिकलसेल ॲनिमिया (Sickle Cell Disease)","20. बहुविकलांगता (Multiple Disabilities)","21. ॲसिड हल्ला ग्रस्त (Acid Attack Victim)"],SPARDHA=["शिष्यवृत्ती परीक्षा इ. 4 थी","शिष्यवृत्ती परीक्षा इ. 7 वी","NMMS","जवाहर नवोदय प्रवेश परीक्षा","सैनिकी शाळा / इतर"],EX=new Set(["CWSN","अल्पसंख्याक","BPL"]);
 const YN=["होय","नाही"],HN=["आहे","नाही"],TS=["उपस्थित","गैरहजर","रजेवर","प्रशिक्षणात"];
 const sl=(k,v,l,o)=>`<div><label>${l}</label><select data-k="${k}"><option value=""></option>${o.map(x=>`<option${x===v?" selected":""}>${E(x)}</option>`).join("")}</select></div>`;
 
@@ -623,6 +623,7 @@ function sdHtml(s){
  <div class="sec"><h3>प्रवर्गनिहाय (जात) संख्या</h3><div class="ovx"><table class="mini sdt"><thead><tr><th>प्रवर्ग</th><th>मुले</th><th>मुली</th><th>एकूण</th></tr></thead><tbody>`+
  cs.map(k=>{const c=cnt(R.filter(r=>r.cat===k));return `<tr><td>${E(catLbl(k))}</td><td>${n(c.M)}</td><td>${n(c.F)}</td><td><b>${n(c.T)}</b></td></tr>`}).join("")+
  `</tbody><tfoot><tr><td>एकूण</td><td>${n(t.M)}</td><td>${n(t.F)}</td><td>${n(t.T)}</td></tr></tfoot></table></div></div>`;
+ h+=sdCrossHtml(R);
  F.u!==s.u&&sdFiltered(s.u);
  const op=(a,v,l)=>`<option value="${E(v)}"${F[a]===String(v)?" selected":""}>${E(l)}</option>`;
  h+=`<div class="sec"><h3>फिल्टर करा / PDF व Excel डाउनलोड</h3><div class="fl">
@@ -636,6 +637,44 @@ function sdHtml(s){
 }
 /* prepend the dashboard to the enrollment tab */
 const _tEn=tEn;tEn=s=>sdHtml(s)+_tEn(s);
+
+/* ---------- class x category table (वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या) built from the uploaded file ---------- */
+function sdCrossData(R){
+ const rows=[],idx={},vis=new Set();
+ const row=(key,label)=>idx[key]||(idx[key]=(rows.push({label,c:{}}),rows[rows.length-1]));
+ STUD_CATS.forEach((k,j)=>{if(!EX.has(k))row("j"+j,k)});
+ R.forEach(r=>{const ci=r.sn-1;if(ci<0||ci>=ALL_CL.length||(r.gen!=="M"&&r.gen!=="F"))return;
+  const lab=CATMAP[catKey(r.cat)],j=lab?STUD_CATS.indexOf(lab):-1,rw=j>=0?idx["j"+j]:row("oth","इतर / प्रवर्ग नमूद नाही");
+  vis.add(ci);const c=rw.c[ci]||(rw.c[ci]=[0,0]);c[r.gen==="M"?0:1]++});
+ const v=[...vis].sort((a,b)=>a-b),rr=rows.filter(x=>Object.keys(x.c).length);
+ const tot=v.map(i=>rr.reduce((a,x)=>{const c=x.c[i]||[0,0];return[a[0]+c[0],a[1]+c[1]]},[0,0]));
+ return{vis:v,rows:rr,tot}
+}
+function sdCrossHtml(R){
+ const d=sdCrossData(R);if(!d.vis.length)return"";
+ const sub='<th>मुले</th><th>मुली</th><th>एकूण</th>';let gb=0,gg=0;
+ const body=d.rows.map(x=>{let rb=0,rg=0;const cells=d.vis.map(i=>{const[b,g]=x.c[i]||[0,0];rb+=b;rg+=g;return `<td>${b||""}</td><td>${g||""}</td><td>${b+g||""}</td>`}).join("");gb+=rb;gg+=rg;return `<tr><td>${E(x.label)}</td>${cells}<td><b>${rb}</b></td><td><b>${rg}</b></td><td><b>${rb+rg}</b></td></tr>`}).join("");
+ const foot=`<tr><td>एकूण</td>${d.tot.map(t=>`<td>${t[0]}</td><td>${t[1]}</td><td>${t[0]+t[1]}</td>`).join("")}<td>${gb}</td><td>${gg}</td><td>${gb+gg}</td></tr>`;
+ return `<div class="sec"><h3>वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या (अपलोड केलेल्या फाईलनुसार)</h3><div class="ovx"><table class="mini sdt"><thead><tr><th rowspan="2">प्रवर्ग</th>${d.vis.map(i=>`<th colspan="3">${E(ALL_CL[i])}</th>`).join("")}<th colspan="3">एकूण</th></tr><tr>${sub.repeat(d.vis.length+1)}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>
+ <div class="sdbtn np"><button class="b p" data-a="sdcp">📄 PDF / प्रिंट</button><button class="b" data-a="sdcx">📗 Excel</button></div><p class="note">CWSN, अल्पसंख्याक व BPL संख्या फाईलमध्ये नसल्याने येथे नाही.</p></div>`
+}
+function sdCrossPdf(s){
+ const d=sdCrossData(sdRows(s.u));if(!d.vis.length)return;PB=false;
+ const c=v=>`<td class="pc">${v?n(v):""}</td>`;let gb=0,gg=0;
+ const body=d.rows.map(x=>{let rb=0,rg=0;const cells=d.vis.map(i=>{const[b,g]=x.c[i]||[0,0];rb+=b;rg+=g;return c(b)+c(g)+c(b+g)}).join("");gb+=rb;gg+=rg;return `<tr><td>${E(x.label)}</td>${cells}${c(rb)+c(rg)+c(rb+rg)}</tr>`}).join("");
+ const foot=`<tr><td>एकूण</td>${d.tot.map(t=>`<td class="pc">${n(t[0])}</td><td class="pc">${n(t[1])}</td><td class="pc">${n(t[0]+t[1])}</td>`).join("")}<td class="pc">${n(gb)}</td><td class="pc">${n(gg)}</td><td class="pc">${n(gb+gg)}</td></tr>`;
+ const sub='<th class="pc">मुले</th><th class="pc">मुली</th><th class="pc">एकूण</th>';
+ const tb=`<div class="pen psum"><table class="pt"><thead><tr><th rowspan="2">प्रवर्ग</th>${d.vis.map(i=>`<th colspan="3" class="pc">${E(ALL_CL[i])}</th>`).join("")}<th colspan="3" class="pc">एकूण</th></tr><tr>${sub.repeat(d.vis.length+1)}</tr></thead><tbody>${body}${foot}</tbody></table></div>`;
+ pDoc(s.name+" – विद्यार्थी संख्या",pHead("केंद्र रविवार पेठ",E(s.name),"वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या")+tb+`<p class="pnote">स्रोत: अपलोड केलेली विद्यार्थी फाईल. प्रिंट दिनांक: ${n(new Date().toLocaleDateString("en-GB"))}</p>`,true)
+}
+async function sdCrossXls(s){
+ const d=sdCrossData(sdRows(s.u));if(!d.vis.length)return;await sdLib("x");
+ const hd=["प्रवर्ग"];d.vis.forEach(i=>hd.push(ALL_CL[i]+" मुले",ALL_CL[i]+" मुली",ALL_CL[i]+" एकूण"));hd.push("एकूण मुले","एकूण मुली","एकूण");let gb=0,gg=0;
+ const rows=d.rows.map(x=>{let rb=0,rg=0;const r=[x.label];d.vis.forEach(i=>{const[b,g]=x.c[i]||[0,0];rb+=b;rg+=g;r.push(b,g,b+g)});gb+=rb;gg+=rg;r.push(rb,rg,rb+rg);return r});
+ const f=["एकूण"];d.tot.forEach(t=>f.push(t[0],t[1],t[0]+t[1]));f.push(gb,gg,gb+gg);
+ const ws=XLSX.utils.aoa_to_sheet([hd].concat(rows,[f]));ws["!cols"]=[{wch:24}].concat(hd.slice(1).map(()=>({wch:10})));
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"वर्ग × प्रवर्ग");XLSX.writeFile(wb,"Vargnihay_pravargnihay_"+s.u+".xlsx")
+}
 
 /* ---------- PDF / Excel ---------- */
 const info=(std,div)=>[std?clLbl(+std):"सर्व इयत्ता",div?"तुकडी "+div:"सर्व तुकड्या",F.cat?catLbl(F.cat):"सर्व प्रवर्ग",F.gen?GL[F.gen]:"मुले व मुली"].join(" | ");
@@ -665,6 +704,7 @@ async function run(btn,txt,fn){
 async function sdAct(k,btn){
  if(k==="sdenp"){enPdf();return}if(k==="sdenx")return run(btn,"⏳ Excel…",enXls);
  const s=S.find(x=>x.u===cur);if(!s)return;const ro=ROLE==="view";
+ if(k==="sdcp"){sdCrossPdf(s);return}if(k==="sdcx")return run(btn,"⏳ Excel…",()=>sdCrossXls(s));
  if(k==="sdfill"){if(ro)return;const m=sdFill(s.u);save(s.u);rr();toast(m.length?"तक्ता भरला. "+m.join(" • "):"पटसंख्या तक्ता भरला");return}
  if(k==="sddel"){if(ro)return;if(!confirm("अपलोड केलेला विद्यार्थी डेटा काढायचा? (पटसंख्या तक्त्यातील आकडे तसेच राहतील)"))return;delete O(s.u).stu;save(s.u);rr();toast("डेटा काढला");return}
  const l=sdFiltered(s.u);if(!l.length){toast("निवडलेल्या फिल्टरसाठी नोंद नाही");return}
