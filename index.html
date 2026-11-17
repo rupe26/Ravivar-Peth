@@ -671,4 +671,35 @@ async function sdAct(k,btn){
  if(k==="sdzip")return run(btn,"⏳ ZIP…",async b=>{await Promise.all([sdLib("h"),sdLib("p"),sdLib("z")]);
   const zip=new JSZip(),g=groups(l);let i=0;
   for(const [key,li] of g){i++;b.textContent=`⏳ PDF ${i} / ${g.size}…`;const pdf=await buildPdf(li,s.name,info(li[0].sn,li[0].div));const [sn,dv]=key.split("|");zip.file(fname(+sn,dv)+".pdf",pdf.output("blob"))}
-  dl(await zip.generateAsync({type:"blob"}),"Tukdi_wi
+  dl(await zip.generateAsync({type:"blob"}),"Tukdi_wise_PDF_"+s.u+".zip")});
+ if(k==="sdxls")return run(btn,"⏳ Excel…",async()=>{await sdLib("x");
+  const wb=XLSX.utils.book_new(),used=new Set(["सारांश"]),g=groups(l),sum=[["इयत्ता","तुकडी","मुले","मुली","एकूण"]];let tm=0,tf=0,tt=0;
+  for(const [,li] of g){const c=cnt(li);tm+=c.M;tf+=c.F;tt+=c.T;sum.push([clLbl(li[0].sn),li[0].div,c.M,c.F,c.T])}
+  sum.push(["एकूण","",tm,tf,tt]);const w0=XLSX.utils.aoa_to_sheet(sum);w0["!cols"]=[{wch:14},{wch:8},{wch:8},{wch:8},{wch:8}];XLSX.utils.book_append_sheet(wb,w0,"सारांश");
+  for(const [,li] of g){
+   const d=[["अ.क्र.","Student ID","जनरल रजि. नं.","विद्यार्थ्याचे नाव","इयत्ता","तुकडी","लिंग","जन्मतारीख","प्रवर्ग"]].concat(li.map((r,i)=>[i+1,String(r.sid),String(r.reg),r.name,clLbl(r.sn),r.div,GL[r.gen],r.dob,r.cat]));
+   const ws=XLSX.utils.aoa_to_sheet(d);ws["!cols"]=[{wch:7},{wch:14},{wch:14},{wch:38},{wch:12},{wch:8},{wch:9},{wch:13},{wch:12}];
+   let nm=("इयत्ता "+(li[0].sn===999?"-":li[0].sn)+"-"+(li[0].div||"-")).replace(/[\[\]:*?\/\\]/g,"_").slice(0,31),q=nm,x=2;while(used.has(q))q=nm.slice(0,28)+"_"+x++;used.add(q);XLSX.utils.book_append_sheet(wb,ws,q)}
+  XLSX.writeFile(wb,"Tukdi_wise_students_"+s.u+".xlsx")})
+}
+
+/* ---------- events (capture on #app so the app's own click handler does not re-render) ---------- */
+const app=document.getElementById("app");
+app.addEventListener("click",e=>{const a=e.target.closest("[data-a]");if(!a||!/^sd/.test(a.dataset.a))return;e.stopPropagation();sdAct(a.dataset.a,a)},true);
+app.addEventListener("change",async e=>{
+ const t=e.target;
+ if(t.classList&&t.classList.contains("sdf")){F[t.dataset.sd]=t.value;const s=S.find(x=>x.u===cur);const b=$("sdflt");if(s&&b)b.innerHTML=sdFilt(s);return}
+ if(t.id==="sdf"&&cur){
+  if(ROLE==="view")return;const f=t.files[0];if(!f)return;const s=S.find(x=>x.u===cur);t.value="";
+  try{toast("फाईल वाचत आहे…");await sdLib("x");
+   const wb=XLSX.read(new Uint8Array(await f.arrayBuffer()),{type:"array",raw:true}),p=sdParse(wb);
+   if(p.ud&&String(p.ud)!==String(s.u)&&!confirm("फाईलमधील UDISE ("+p.ud+") या शाळेच्या ("+s.u+") पेक्षा वेगळा आहे. तरीही पुढे जायचे?"))return;
+   O(s.u).stu={t:Date.now(),f:f.name,r:p.r};F.u="";const m=sdFill(s.u);save(s.u);rr();
+   toast(n(p.r.length)+" विद्यार्थी लोड झाले; पटसंख्या तक्ता भरला."+(m.length?" "+m.join(" • "):""))
+  }catch(er){toast("त्रुटी: "+er.message)}
+ }
+},true);
+})();
+
+</script>
+</body></html>
