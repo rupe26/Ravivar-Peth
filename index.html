@@ -592,6 +592,7 @@ function sdFill(u){
  });
  const derived=Object.values(CATMAP).map(l=>STUD_CATS.indexOf(l)).filter(j=>j>=0);
  for(let i=0;i<ALL_CL.length;i++)for(const j of new Set(derived)){const c=m[i+"."+j]||{b:0,g:0};setp(o,`en.m.${i}.${j}.b`,c.b||"");setp(o,`en.m.${i}.${j}.g`,c.g||"")}
+ {const cm=cnt(R);setp(o,"ov.b",cm.M);setp(o,"ov.g",cm.F);const sx=S.find(x=>x.u===u);if(sx)applyOv(sx)}
  const msg=[];const sc=Object.entries(skipCat);
  if(sc.length)msg.push("प्रवर्ग जुळला नाही: "+sc.map(x=>x[0]+" ("+x[1]+")").join(", "));
  if(skipCl)msg.push("इ. 1–10 बाहेरचे: "+skipCl);if(skipGen)msg.push("लिंग नसलेले: "+skipGen);
@@ -609,7 +610,7 @@ function sdFilt(s){
 }
 function sdHtml(s){
  const o=O(s.u),st=o.stu;
- let h=`<div id="sdash"><div class="sec np"><h3>📥 विद्यार्थी डेटा अपलोड (Excel / CSV)</h3><p class="note">विद्यार्थी पोर्टलवरून डाउनलोड केलेली फाईल निवडा. अपलोड होताच खालील "वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या" तक्ता आपोआप भरला जातो (CWSN, अल्पसंख्याक व BPL ओळी तुम्ही हाताने भराव्यात). विद्यार्थ्यांची नावे/जन्मतारीख संवेदनशील आहेत – पेज लिंक इतरांना पाठवू नका.</p>
+ let h=`<div id="sdash"><div class="sec np"><h3>📥 विद्यार्थी डेटा अपलोड (Excel / CSV)</h3><p class="note">विद्यार्थी पोर्टलवरून डाउनलोड केलेली फाईल निवडा. अपलोड होताच खालील "वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या" तक्ता, "पायाभूत सुविधा" टॅबमधील मुले/मुली संख्या आणि मुख्य डॅशबोर्डवरील पटसंख्या आपोआप अद्ययावत होते (CWSN, अल्पसंख्याक व BPL ओळी तुम्ही हाताने भराव्यात). विद्यार्थ्यांची नावे/जन्मतारीख संवेदनशील आहेत – पेज लिंक इतरांना पाठवू नका.</p>
  <div><label class="b p" style="display:inline-block">📁 फाईल निवडा<input type="file" id="sdf" accept=".xlsx,.xls,.csv" hidden></label> ${st?`<button class="b a" data-a="sdfill">↻ तक्ता पुन्हा भरा</button> <button class="b d" data-a="sddel">डेटा काढा</button>`:""}</div>
  <div class="note" style="margin-top:8px">${st?E(st.f||"फाईल")+" • "+n(st.r.length)+" विद्यार्थी • "+new Date(st.t).toLocaleDateString("en-IN"):"अजून फाईल अपलोड केलेली नाही."}</div></div>`;
  if(!st||!st.r.length)return h+"</div>";
