@@ -73,6 +73,11 @@ textarea{field-sizing:content}.ag{min-height:42px;resize:none;overflow:hidden;li
 @media print{.np,.tabs,.bar,button,.tb,.nv{display:none!important}body{background:#fff;color:#000;padding:0}}
 table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}th,td{padding:8px 10px;border-bottom:1px solid var(--ln);text-align:left}th{background:var(--sf);position:sticky;top:0}tr.r{cursor:pointer}tr.r:hover{background:var(--sf)}
 @media(min-width:760px){.nv{display:none}body{padding-bottom:30px}.ts{bottom:24px}.tabs{top:64px}}
+
+.sdt{font-size:13px}.sdt th,.sdt td{padding:5px 7px;text-align:center}.sdt td:first-child,.sdt th:first-child{text-align:left}.sdt tfoot td{font-weight:700;background:var(--sf)}
+.sdbar{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--sf);min-width:80px}.sdbar i{display:block;height:100%}.sdbar .m{background:#2f80ed}.sdbar .f{background:#e8559b}
+.sdbtn{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.sdbtn .b{font-size:13px}
+@media print{#sdash{display:none!important}}
 </style></head><body>
 <header class="tb np"><div class="w"><div class="lg">🏫</div><div class="tt"><h1>शाळा माहिती, फोटो अल्बम व भेट नोंदी</h1><p>केंद्र रविवार पेठ • ता. अंबाजोगाई, जि. बीड</p></div><button class="sy" id="sy" data-a="sync" aria-label="Sync"><i></i><span id="syt">…</span></button></div></header>
 <main class="w" id="app"></main>
@@ -194,9 +199,9 @@ function tMd(s){
 function hvw(){const r=allH();return kpis()+`<div class="bar np"><button class="b" data-a="hv">← शाळा यादी</button><button class="b" data-a="cpm">मदतनीस Excel कॉपी</button></div><div style="overflow-x:auto"><table><thead><tr><th>अ.क्र.</th><th>शाळा</th><th>मदतनीस</th><th>बँक</th><th>खाते क्रमांक</th><th>IFSC</th><th>आधार</th><th>मानधन</th></tr></thead><tbody>${r.map((x,i)=>`<tr class="r" data-a="hrow:${x[0]}"><td>${n(i+1)}</td><td>${E((S.find(s=>s.u===x[0])||{}).name)}</td><td>${E(x[1].nm)}</td><td>${E(x[1].bk)}</td><td>${E(x[1].ac)}</td><td>${E(x[1].if)}</td><td>${x[1].aa?mk(x[1].aa):"—"}</td><td>₹ ${E(x[1].pay)}</td></tr>`).join("")}</tbody></table></div><p class="note">पंक्तीवर क्लिक करून शाळेतील मदतनीस संपादित करा.</p>`}
 function rr(){if(ROLE==="view"){hv=false;if(tab==="md")tab="al"}const s=S.find(x=>x.u===cur);$("app").innerHTML=s?detail(s):(hv?hvw():home());if($("n1")){$("n1").className=!cur&&!hv&&!gl?"on":"";$("n2").className=!cur&&!hv&&gl?"on":"";$("n3").className=!cur&&hv?"on":""}roLock();if(document.querySelector(".entb"))enTot()}
 function roLock(){const v=ROLE==="view";document.body.classList.toggle("ro",v);const n3=$("n3");if(n3)n3.style.display=v?"none":"";if(!v)return;const ap=$("app");
- ap.querySelectorAll("textarea,select,input:not(#q):not(#gk)").forEach(i=>{i.disabled=true});
+ ap.querySelectorAll("textarea,select:not(.sdf),input:not(#q):not(#gk)").forEach(i=>{i.disabled=true});
  ap.querySelectorAll("label.b").forEach(x=>x.remove());ap.querySelectorAll(".enadd,.rx").forEach(x=>x.remove());ap.querySelectorAll("[data-r]").forEach(x=>x.remove());
- ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","aen","ren","ed","hv","cpm"].includes(a))b.remove()});
+ ap.querySelectorAll("button.b").forEach(b=>{const a=(b.dataset.a||"").split(":")[0];if(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","aen","ren","ed","hv","cpm","sdfill","sddel"].includes(a))b.remove()});
  ap.querySelectorAll(".sec").forEach(s=>{const t=s.querySelector("h3");if(t&&/नवीन भेट नोंद|कर्मचारी जोडा|पोषण आहार नोंद जोडा/.test(t.textContent))s.remove()})}
 const MUT=new Set(["dal","dpi","ast","dst","xst","xhp","amd","dmd","dvs","avs","acw","dcw","amm","dmm","aen","ren"]);
 const onClick=e=>{
@@ -528,4 +533,142 @@ app.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList&&e.tar
 app.addEventListener("toggle",e=>{if(e.target.querySelectorAll)e.target.querySelectorAll("textarea").forEach(grow)},true);
 addEventListener("resize",()=>app.querySelectorAll("textarea").forEach(grow));conv()})();
 </script>
-</body></html>
+<script>
+/* ===== Student data dashboard merged into the "पटसंख्या व CWSN" tab =====
+   Upload Excel/CSV -> auto-fill enrollment table, dashboard, filtered PDF / division-wise PDF (ZIP) / division-wise Excel */
+(function(){
+const SDL={},SDU={
+ x:"https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js",
+ z:"https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
+ h:"https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
+ p:"https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"};
+const sdLib=k=>SDL[k]||(SDL[k]=new Promise((ok,no)=>{const e=document.createElement("script");e.src=SDU[k];e.onload=ok;e.onerror=()=>{delete SDL[k];no(new Error("इंटरनेट आवश्यक आहे"))};document.head.appendChild(e)}));
+const GL={M:"मुलगा",F:"मुलगी",O:"इतर"};
+/* file category -> STUD_CATS label */
+const CATMAP={general:"General",open:"General",sc:"अनुसूचित जाती",st:"अनुसूचित जमाती",obc:"OBC",sbc:"SBC",sebc:"SEBC",vjnt:"VJNT",vja:"भ ज अ",ntb:"भ ज ब",ntc:"भ ज क",ntd:"भ ज ड"};
+const CATMR={"general":"सर्वसाधारण (General)","sc":"अनुसूचित जाती (SC)","st":"अनुसूचित जमाती (ST)","obc":"इतर मागास (OBC)","vja":"विमुक्त जाती (VJ-A)","nt b":"भटक्या जमाती (NT-B)","nt c":"भटक्या जमाती (NT-C)","nt d":"भटक्या जमाती (NT-D)","sbc":"विशेष मागास (SBC)"};
+const catKey=c=>String(c||"").toLowerCase().replace(/[^a-z]/g,"");
+const catLbl=c=>CATMR[String(c).toLowerCase().replace(/[-_]/g," ").replace(/\s+/g," ").trim()]||c;
+const clLbl=sn=>sn>=1&&sn<=ALL_CL.length?ALL_CL[sn-1]:(sn===999?"नमूद नाही":"इयत्ता "+sn);
+const F={u:"",std:"",cat:"",div:"",gen:""};let busy=false;
+
+/* ---------- data helpers ---------- */
+const sdRows=u=>{const st=(C[u]||{}).stu;return st&&st.r?st.r.map(a=>({sid:a[0],reg:a[1],name:a[2],sn:a[3],div:a[4],gen:a[5],dob:a[6],cat:a[7]})):[]};
+const cnt=l=>{let M=0,Fm=0;l.forEach(r=>{if(r.gen==="M")M++;else if(r.gen==="F")Fm++});return{M,F:Fm,T:l.length}};
+const sdFiltered=u=>{if(F.u!==u){F.u=u;F.std=F.cat=F.div=F.gen=""}
+ return sdRows(u).filter(r=>(!F.std||String(r.sn)===F.std)&&(!F.cat||r.cat===F.cat)&&(!F.div||r.div===F.div)&&(!F.gen||r.gen===F.gen))
+ .sort((a,b)=>a.sn-b.sn||a.div.localeCompare(b.div)||a.name.localeCompare(b.name))};
+
+/* ---------- parse uploaded sheet ---------- */
+function pick(r,names){for(const k of names){if(r[k]!==undefined&&String(r[k]).trim()!=="")return String(r[k]).trim()}return""}
+function sdParse(wb){
+ const ws=wb.Sheets[wb.SheetNames[0]],aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:""});
+ let h=aoa.findIndex(r=>r.join("|").toLowerCase().includes("student name"));
+ if(h<0)h=aoa.findIndex(r=>r.join("|").toLowerCase().includes("standard"));
+ if(h<0)throw new Error("हेडर ओळ (Standard / Student Name) सापडली नाही");
+ const ud=(String(aoa[0]&&aoa[0][0]||"").match(/\d{11}/)||[""])[0];
+ const heads=aoa[h].map(x=>String(x).trim().toLowerCase()),out=[];
+ for(let i=h+1;i<aoa.length;i++){
+  const r={};heads.forEach((k,j)=>r[k]=aoa[i][j]);
+  const name=pick(r,["student name","name"]),sd=pick(r,["standard","class","grade"]);
+  if(!name&&!sd)continue;
+  const mm=sd.match(/\d+/),g=pick(r,["student gender","gender","sex"]).toLowerCase();
+  const gen=g.startsWith("m")||g.startsWith("boy")||g.includes("मुलगा")?"M":g.startsWith("f")||g.startsWith("girl")||g.includes("मुलगी")?"F":"O";
+  out.push([pick(r,["student id","studentid"]),pick(r,["gen reg no","reg no"]),name,mm?parseInt(mm[0]):999,pick(r,["division","div"]),gen,pick(r,["dob","date of birth"]),pick(r,["category","caste category"])||"नमूद नाही"])
+ }
+ if(!out.length)throw new Error("फाईलमध्ये विद्यार्थ्यांची माहिती सापडली नाही");
+ return{ud,r:out}
+}
+
+/* ---------- fill enrollment table (classes x categories) ---------- */
+function sdFill(u){
+ const o=O(u),R=sdRows(u),m={};let skipCat={},skipCl=0,skipGen=0;
+ R.forEach(r=>{
+  const ci=r.sn-1,lab=CATMAP[catKey(r.cat)],j=lab?STUD_CATS.indexOf(lab):-1;
+  if(ci<0||ci>=ALL_CL.length){skipCl++;return}
+  if(j<0){skipCat[r.cat]=(skipCat[r.cat]||0)+1;return}
+  if(r.gen!=="M"&&r.gen!=="F"){skipGen++;return}
+  const k=ci+"."+j;(m[k]=m[k]||{b:0,g:0})[r.gen==="M"?"b":"g"]++
+ });
+ const derived=Object.values(CATMAP).map(l=>STUD_CATS.indexOf(l)).filter(j=>j>=0);
+ for(let i=0;i<ALL_CL.length;i++)for(const j of new Set(derived)){const c=m[i+"."+j]||{b:0,g:0};setp(o,`en.m.${i}.${j}.b`,c.b||"");setp(o,`en.m.${i}.${j}.g`,c.g||"")}
+ const msg=[];const sc=Object.entries(skipCat);
+ if(sc.length)msg.push("प्रवर्ग जुळला नाही: "+sc.map(x=>x[0]+" ("+x[1]+")").join(", "));
+ if(skipCl)msg.push("इ. 1–10 बाहेरचे: "+skipCl);if(skipGen)msg.push("लिंग नसलेले: "+skipGen);
+ return msg
+}
+
+/* ---------- dashboard HTML ---------- */
+function sdFilt(s){
+ const l=sdFiltered(s.u),c=cnt(l);
+ let h=`<div class="note" style="margin:6px 0">निवडलेले: एकूण ${n(c.T)} (मुले ${n(c.M)}, मुली ${n(c.F)})</div><div class="ovx"><table class="mini sdt"><thead><tr><th>अ.क्र.</th><th>Student ID</th><th>नाव</th><th>इयत्ता</th><th>तुकडी</th><th>लिंग</th><th>प्रवर्ग</th></tr></thead><tbody>`;
+ l.slice(0,20).forEach((r,i)=>{h+=`<tr><td>${i+1}</td><td>${E(r.sid)}</td><td style="text-align:left">${E(r.name)}</td><td>${E(clLbl(r.sn))}</td><td>${E(r.div)}</td><td>${GL[r.gen]}</td><td>${E(r.cat)}</td></tr>`});
+ if(l.length>20)h+=`<tr><td colspan="7" class="note">… आणखी ${n(l.length-20)} नोंदी PDF / Excel मध्ये</td></tr>`;
+ if(!l.length)h+=`<tr><td colspan="7" class="note">नोंद नाही</td></tr>`;
+ return h+"</tbody></table></div>"
+}
+function sdHtml(s){
+ const o=O(s.u),st=o.stu;
+ let h=`<div id="sdash"><div class="sec np"><h3>📥 विद्यार्थी डेटा अपलोड (Excel / CSV)</h3><p class="note">विद्यार्थी पोर्टलवरून डाउनलोड केलेली फाईल निवडा. अपलोड होताच खालील "वर्गनिहाय / प्रवर्गनिहाय विद्यार्थी संख्या" तक्ता आपोआप भरला जातो (CWSN, अल्पसंख्याक व BPL ओळी तुम्ही हाताने भराव्यात). विद्यार्थ्यांची नावे/जन्मतारीख संवेदनशील आहेत – पेज लिंक इतरांना पाठवू नका.</p>
+ <div><label class="b p" style="display:inline-block">📁 फाईल निवडा<input type="file" id="sdf" accept=".xlsx,.xls,.csv" hidden></label> ${st?`<button class="b a" data-a="sdfill">↻ तक्ता पुन्हा भरा</button> <button class="b d" data-a="sddel">डेटा काढा</button>`:""}</div>
+ <div class="note" style="margin-top:8px">${st?E(st.f||"फाईल")+" • "+n(st.r.length)+" विद्यार्थी • "+new Date(st.t).toLocaleDateString("en-IN"):"अजून फाईल अपलोड केलेली नाही."}</div></div>`;
+ if(!st||!st.r.length)return h+"</div>";
+ const R=sdRows(s.u),t=cnt(R),sn=[...new Set(R.map(r=>r.sn))].sort((a,b)=>a-b),cs=[...new Set(R.map(r=>r.cat))].sort((a,b)=>a.localeCompare(b)),dv=[...new Set(R.map(r=>r.div))].sort();
+ const mx=Math.max(...sn.map(k=>R.filter(r=>r.sn===k).length));
+ h+=`<div class="kp np"><div><b>${n(t.M)}</b><span>👦 मुले</span></div><div><b>${n(t.F)}</b><span>👧 मुली</span></div><div><b>${n(t.T)}</b><span>👥 एकूण</span></div></div>
+ <div class="sec"><h3>इयत्तानिहाय संख्या</h3><div class="ovx"><table class="mini sdt"><thead><tr><th>इयत्ता</th><th>मुले</th><th>मुली</th><th>एकूण</th><th>आलेख</th></tr></thead><tbody>`+
+ sn.map(k=>{const c=cnt(R.filter(r=>r.sn===k));return `<tr><td>${E(clLbl(k))}</td><td>${n(c.M)}</td><td>${n(c.F)}</td><td><b>${n(c.T)}</b></td><td><div class="sdbar" style="width:${Math.round(c.T/mx*100)}%"><i class="m" style="width:${c.T?c.M/c.T*100:0}%"></i><i class="f" style="width:${c.T?c.F/c.T*100:0}%"></i></div></td></tr>`}).join("")+
+ `</tbody><tfoot><tr><td>एकूण</td><td>${n(t.M)}</td><td>${n(t.F)}</td><td>${n(t.T)}</td><td></td></tr></tfoot></table></div></div>
+ <div class="sec"><h3>प्रवर्गनिहाय (जात) संख्या</h3><div class="ovx"><table class="mini sdt"><thead><tr><th>प्रवर्ग</th><th>मुले</th><th>मुली</th><th>एकूण</th></tr></thead><tbody>`+
+ cs.map(k=>{const c=cnt(R.filter(r=>r.cat===k));return `<tr><td>${E(catLbl(k))}</td><td>${n(c.M)}</td><td>${n(c.F)}</td><td><b>${n(c.T)}</b></td></tr>`}).join("")+
+ `</tbody><tfoot><tr><td>एकूण</td><td>${n(t.M)}</td><td>${n(t.F)}</td><td>${n(t.T)}</td></tr></tfoot></table></div></div>`;
+ F.u!==s.u&&sdFiltered(s.u);
+ const op=(a,v,l)=>`<option value="${E(v)}"${F[a]===String(v)?" selected":""}>${E(l)}</option>`;
+ h+=`<div class="sec"><h3>फिल्टर करा / PDF व Excel डाउनलोड</h3><div class="fl">
+ <div><label>इयत्ता</label><select class="sdf" data-sd="std">${op("std","","सर्व इयत्ता")}${sn.map(k=>op("std",k,clLbl(k))).join("")}</select></div>
+ <div><label>प्रवर्ग</label><select class="sdf" data-sd="cat">${op("cat","","सर्व प्रवर्ग")}${cs.map(k=>op("cat",k,catLbl(k))).join("")}</select></div>
+ <div><label>तुकडी</label><select class="sdf" data-sd="div">${op("div","","सर्व तुकड्या")}${dv.map(k=>op("div",k,k||"—")).join("")}</select></div>
+ <div><label>लिंग</label><select class="sdf" data-sd="gen">${op("gen","","सर्व")}${op("gen","M","मुले")}${op("gen","F","मुली")}</select></div></div>
+ <div class="sdbtn np"><button class="b p" data-a="sdpdf">⬇ PDF</button><button class="b" data-a="sdzip">📦 तुकडीनिहाय PDF (ZIP)</button><button class="b" data-a="sdxls">📗 तुकडीनिहाय Excel (वेगळे टॅब)</button></div>
+ <div id="sdflt">${sdFilt(s)}</div></div>`;
+ return h+"</div>"
+}
+/* prepend the dashboard to the enrollment tab */
+const _tEn=tEn;tEn=s=>sdHtml(s)+_tEn(s);
+
+/* ---------- PDF / Excel ---------- */
+const info=(std,div)=>[std?clLbl(+std):"सर्व इयत्ता",div?"तुकडी "+div:"सर्व तुकड्या",F.cat?catLbl(F.cat):"सर्व प्रवर्ग",F.gen?GL[F.gen]:"मुले व मुली"].join(" | ");
+async function buildPdf(l,title,inf){
+ const PER=28,pages=Math.ceil(l.length/PER),c=cnt(l),{jsPDF}=window.jspdf,pdf=new jsPDF({unit:"mm",format:"a4"}),host=document.createElement("div");
+ host.style.cssText="position:fixed;left:-10000px;top:0";document.body.appendChild(host);
+ try{for(let p=0;p<pages;p++){
+  const ch=l.slice(p*PER,(p+1)*PER),pg=document.createElement("div");
+  pg.style.cssText="width:794px;height:1123px;padding:40px 36px;background:#fff;color:#000;font-family:'Noto Sans Devanagari',sans-serif;font-size:13px;position:relative";
+  pg.innerHTML=`<div style="text-align:center;font-size:18px;font-weight:700">${E(title)}</div><div style="text-align:center;font-size:14px;margin:4px 0">विद्यार्थी यादी — ${E(inf)}</div><div style="text-align:center;font-size:13px;margin-bottom:10px">एकूण: ${n(c.T)} &nbsp; मुले: ${n(c.M)} &nbsp; मुली: ${n(c.F)}</div>
+  <table style="width:100%;border-collapse:collapse;font-size:11.5px"><tr style="background:#e8ebf7">${["अ.क्र.","जनरल रजि. नं.","Student ID","विद्यार्थ्याचे नाव","इयत्ता","तुकडी","लिंग","जन्मतारीख","प्रवर्ग"].map(x=>`<th style="border:1px solid #444;padding:5px 4px">${x}</th>`).join("")}</tr>
+  ${ch.map((r,i)=>`<tr>${[p*PER+i+1,E(r.reg),E(r.sid),E(r.name),E(clLbl(r.sn)),E(r.div),GL[r.gen],E(r.dob),E(r.cat)].map((x,k)=>`<td style="border:1px solid #444;padding:4px;text-align:${k===3?"left":"center"}">${x}</td>`).join("")}</tr>`).join("")}</table>
+  <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:11px;color:#555">पान ${p+1} / ${pages}</div>`;
+  host.appendChild(pg);
+  const cv=await html2canvas(pg,{scale:2,backgroundColor:"#fff"});
+  if(p>0)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",.92),"JPEG",0,0,210,297);host.removeChild(pg)
+ }}finally{host.remove()}
+ return pdf
+}
+const dl=(blob,name)=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)};
+const groups=l=>{const g=new Map();l.forEach(r=>{const k=r.sn+"|"+r.div;if(!g.has(k))g.set(k,[]);g.get(k).push(r)});return g};
+const fname=(sn,dv)=>`Std${sn===999?"NA":sn}_Div${(dv||"NA").replace(/[^\w-]/g,"_")}`;
+async function run(btn,txt,fn){
+ if(busy)return;busy=true;const old=btn.textContent;btn.textContent=txt;
+ try{await fn(btn)}catch(e){toast("त्रुटी: "+e.message)}
+ busy=false;if(btn.isConnected)btn.textContent=old}
+async function sdAct(k,btn){
+ const s=S.find(x=>x.u===cur);if(!s)return;const ro=ROLE==="view";
+ if(k==="sdfill"){if(ro)return;const m=sdFill(s.u);save(s.u);rr();toast(m.length?"तक्ता भरला. "+m.join(" • "):"पटसंख्या तक्ता भरला");return}
+ if(k==="sddel"){if(ro)return;if(!confirm("अपलोड केलेला विद्यार्थी डेटा काढायचा? (पटसंख्या तक्त्यातील आकडे तसेच राहतील)"))return;delete O(s.u).stu;save(s.u);rr();toast("डेटा काढला");return}
+ const l=sdFiltered(s.u);if(!l.length){toast("निवडलेल्या फिल्टरसाठी नोंद नाही");return}
+ if(k==="sdpdf")return run(btn,"⏳ PDF…",async()=>{await Promise.all([sdLib("h"),sdLib("p")]);
+  const pdf=await buildPdf(l,s.name,info(F.std,F.div));pdf.save("विद्यार्थी_यादी_"+s.u+".pdf")});
+ if(k==="sdzip")return run(btn,"⏳ ZIP…",async b=>{await Promise.all([sdLib("h"),sdLib("p"),sdLib("z")]);
+  const zip=new JSZip(),g=groups(l);let i=0;
+  for(const [key,li] of g){i++;b.textContent=`⏳ PDF ${i} / ${g.size}…`;const pdf=await buildPdf(li,s.name,info(li[0].sn,li[0].div));const [sn,dv]=key.split("|");zip.file(fname(+sn,dv)+".pdf",pdf.output("blob"))}
+  dl(await zip.generateAsync({type:"blob"}),"Tukdi_wi
