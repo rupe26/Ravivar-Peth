@@ -662,6 +662,7 @@ async function run(btn,txt,fn){
  try{await fn(btn)}catch(e){toast("त्रुटी: "+e.message)}
  busy=false;if(btn.isConnected)btn.textContent=old}
 async function sdAct(k,btn){
+ if(k==="sdenp"){enPdf();return}if(k==="sdenx")return run(btn,"⏳ Excel…",enXls);
  const s=S.find(x=>x.u===cur);if(!s)return;const ro=ROLE==="view";
  if(k==="sdfill"){if(ro)return;const m=sdFill(s.u);save(s.u);rr();toast(m.length?"तक्ता भरला. "+m.join(" • "):"पटसंख्या तक्ता भरला");return}
  if(k==="sddel"){if(ro)return;if(!confirm("अपलोड केलेला विद्यार्थी डेटा काढायचा? (पटसंख्या तक्त्यातील आकडे तसेच राहतील)"))return;delete O(s.u).stu;save(s.u);rr();toast("डेटा काढला");return}
@@ -682,6 +683,44 @@ async function sdAct(k,btn){
    let nm=("इयत्ता "+(li[0].sn===999?"-":li[0].sn)+"-"+(li[0].div||"-")).replace(/[\[\]:*?\/\\]/g,"_").slice(0,31),q=nm,x=2;while(used.has(q))q=nm.slice(0,28)+"_"+x++;used.add(q);XLSX.utils.book_append_sheet(wb,ws,q)}
   XLSX.writeFile(wb,"Tukdi_wise_students_"+s.u+".xlsx")})
 }
+
+/* ---------- all-schools class-wise enrollment: PDF + Excel (home screen) ---------- */
+function enAgg(){
+ const sch=S.map(s=>{const o=C[s.u]||{},cl=ALL_CL.map((_,i)=>{let b=0,g=0;STUD_CATS.forEach((k,j)=>{if(EX.has(k))return;b+=+gp(o,`en.m.${i}.${j}.b`)||0;g+=+gp(o,`en.m.${i}.${j}.g`)||0});return[b,g]});return{s,cl,has:cl.some(x=>x[0]||x[1])}});
+ const vis=ALL_CL.map((_,i)=>i).filter(i=>sch.some(x=>x.cl[i][0]||x.cl[i][1]));
+ const m={};ALL_CL.forEach((_,i)=>{m[i]={};STUD_CATS.forEach((k,j)=>{let b=0,g=0;S.forEach(s=>{const o=C[s.u]||{};b+=+gp(o,`en.m.${i}.${j}.b`)||0;g+=+gp(o,`en.m.${i}.${j}.g`)||0});m[i][j]={b,g}})});
+ return{sch,vis,o:{en:{m}},miss:sch.filter(x=>!x.has).length}
+}
+function enPdf(){
+ const a=enAgg();if(!a.vis.length){toast("अजून कोणत्याही शाळेची वर्गनिहाय पटसंख्या भरलेली नाही");return}
+ PB=false;
+ const c=v=>`<td class="pc">${v?n(v):""}</td>`,tot=a.vis.map(()=>[0,0]);let gb=0,gg=0;
+ const body=a.sch.map((x,k)=>{let tb=0,tg=0;const cells=a.vis.map((i,t)=>{const[b,g]=x.cl[i];tb+=b;tg+=g;tot[t][0]+=b;tot[t][1]+=g;return c(b)+c(g)+c(b+g)}).join("");gb+=tb;gg+=tg;
+  return `<tr><td class="pc">${n(k+1)}</td><td>${E(x.s.name)}</td>${cells}${c(tb)+c(tg)+c(tb+tg)}</tr>`}).join("");
+ const foot=`<tr><td></td><td>एकूण</td>${tot.map(t=>`<td class="pc">${n(t[0])}</td><td class="pc">${n(t[1])}</td><td class="pc">${n(t[0]+t[1])}</td>`).join("")}<td class="pc">${n(gb)}</td><td class="pc">${n(gg)}</td><td class="pc">${n(gb+gg)}</td></tr>`;
+ const sub='<th class="pc">मुले</th><th class="pc">मुली</th><th class="pc">एकूण</th>';
+ const tb=`<div class="pen psum"><table class="pt"><thead><tr><th rowspan="2">अ.क्र.</th><th rowspan="2">शाळेचे नाव</th>${a.vis.map(i=>`<th colspan="3" class="pc">${E(ALL_CL[i])}</th>`).join("")}<th colspan="3" class="pc">एकूण</th></tr><tr>${sub.repeat(a.vis.length+1)}</tr></thead><tbody>${body}${foot}</tbody></table></div>`+
+  `<p class="pnote">CWSN, अल्पसंख्याक व BPL संख्या एकूणमध्ये मोजलेली नाही.${a.miss?" वर्गनिहाय पटसंख्या न भरलेल्या शाळा: "+n(a.miss)+" (ओळी रिकाम्या).":""}</p>`;
+ const h=pHead("केंद्र रविवार पेठ","सर्व शाळा – वर्गनिहाय पटसंख्या","ता. अंबाजोगाई • जि. बीड")+pS(1,"शाळानिहाय / वर्गनिहाय पटसंख्या",tb)+pS(2,"वर्गनिहाय / प्रवर्गनिहाय एकूण पटसंख्या (सर्व शाळा)",pEn(a.o))+`<p class="pnote">प्रिंट दिनांक: ${n(new Date().toLocaleDateString("en-GB"))}</p>`;
+ pDoc("केंद्र रविवार पेठ – वर्गनिहाय पटसंख्या",h,true)
+}
+async function enXls(){
+ const a=enAgg();if(!a.vis.length){toast("अजून कोणत्याही शाळेची वर्गनिहाय पटसंख्या भरलेली नाही");return}
+ await sdLib("x");
+ const hd=["अ.क्र.","शाळा","UDISE"];a.vis.forEach(i=>hd.push(ALL_CL[i]+" मुले",ALL_CL[i]+" मुली",ALL_CL[i]+" एकूण"));hd.push("एकूण मुले","एकूण मुली","एकूण विद्यार्थी");
+ const tot=a.vis.map(()=>[0,0]);let gb=0,gg=0;
+ const rows=a.sch.map((x,k)=>{let tb=0,tg=0;const r=[k+1,x.s.name,String(x.s.u)];a.vis.forEach((i,t)=>{const[b,g]=x.cl[i];tb+=b;tg+=g;tot[t][0]+=b;tot[t][1]+=g;r.push(b,g,b+g)});gb+=tb;gg+=tg;r.push(tb,tg,tb+tg);return r});
+ const fr=["","एकूण",""];tot.forEach(t=>fr.push(t[0],t[1],t[0]+t[1]));fr.push(gb,gg,gb+gg);
+ const w1=XLSX.utils.aoa_to_sheet([hd].concat(rows,[fr]));w1["!cols"]=[{wch:6},{wch:42},{wch:14}].concat(hd.slice(3).map(()=>({wch:10})));
+ const h2=["प्रवर्ग"];a.vis.forEach(i=>h2.push(ALL_CL[i]+" मुले",ALL_CL[i]+" मुली",ALL_CL[i]+" एकूण"));h2.push("एकूण मुले","एकूण मुली","एकूण");
+ const t2=a.vis.map(()=>[0,0]);let g2b=0,g2g=0;
+ const r2=STUD_CATS.map((k,j)=>{let rb=0,rg=0;const r=[k+(EX.has(k)?" *":"")];a.vis.forEach((i,t)=>{const{b,g}=a.o.en.m[i][j];rb+=b;rg+=g;if(!EX.has(k)){t2[t][0]+=b;t2[t][1]+=g}r.push(b,g,b+g)});if(!EX.has(k)){g2b+=rb;g2g+=rg}r.push(rb,rg,rb+rg);return r});
+ const f2=["एकूण (* वगळून)"];t2.forEach(t=>f2.push(t[0],t[1],t[0]+t[1]));f2.push(g2b,g2g,g2b+g2g);
+ const w2=XLSX.utils.aoa_to_sheet([h2].concat(r2,[f2]));w2["!cols"]=[{wch:20}].concat(h2.slice(1).map(()=>({wch:10})));
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,w1,"शाळानिहाय पटसंख्या");XLSX.utils.book_append_sheet(wb,w2,"वर्ग × प्रवर्ग (एकूण)");
+ XLSX.writeFile(wb,"Sarva_shala_vargnihay_patsankhya.xlsx")
+}
+const _home=home;home=()=>_home().replace('<button class="b p" data-a="pall">','<button class="b a" data-a="sdenp">📊 वर्गनिहाय पटसंख्या PDF</button><button class="b a" data-a="sdenx">📗 वर्गनिहाय पटसंख्या Excel</button><button class="b p" data-a="pall">');
 
 /* ---------- events (capture on #app so the app's own click handler does not re-render) ---------- */
 const app=document.getElementById("app");
